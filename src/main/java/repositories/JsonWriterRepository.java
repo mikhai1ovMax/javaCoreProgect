@@ -15,7 +15,6 @@ public class JsonWriterRepository implements WriterRepository{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
