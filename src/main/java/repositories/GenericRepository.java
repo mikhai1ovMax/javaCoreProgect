@@ -1,7 +1,9 @@
 package repositories;
 
+import java.util.List;
+
 public interface GenericRepository <T, Integer>{
     public void saveData(T object);
-    public T readData();
+    public List readData();
     public void updateData();
 }
