@@ -17,7 +17,8 @@ public class JsonWriterRepository implements WriterRepository {
     public void saveData(Writer writer) {
         List<Writer> writers = new ArrayList<>();
         try (FileWriter fileWriter = new FileWriter("writers.json", false)) {
-            writers = readData();
+            if (readData() != null)
+                writers = readData();
             writers.add(writer);
             fileWriter.write(gson.toJson(writers));
         } catch (IOException e) {
