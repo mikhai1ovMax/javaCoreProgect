@@ -36,12 +36,15 @@ public class View {
     }
 
     public static void postInputInstruction() {
-        System.out.println("enter id and content(split them using enter");
+        System.out.println("enter id and content(split them using enter)");
     }
 
-    public static void  RegionInputInstruction(){
-        System.out.println("enter id and region name(split them using enter");
+    public static void  regionInputInstruction(){
+        System.out.println("enter id and region name(split them using enter)");
     }
 
+    public static void  writerInputInstruction(){
+        System.out.println("enter id, first name, last name, posts id, region id(split them using enter)");
+    }
 
 }

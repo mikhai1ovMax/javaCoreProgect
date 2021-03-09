@@ -22,6 +22,8 @@ public class JsonRegionRepository implements RegionRepository {
     @Override
     public void save(Region region) {
         List<Region> regions = getAllInternal();
+        if(regions == null)
+            regions = new ArrayList<>();
         regions.add(region);
         saveRegionList(regions);
     }

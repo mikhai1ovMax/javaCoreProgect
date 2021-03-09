@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,10 +22,12 @@ public class JsonPostRepository implements PostRepository {
     Gson gson = new Gson();
 
     @Override
-    public void save(Post region) {
-        List<Post> regions = getAllInternal();
-        regions.add(region);
-        savePostList(regions);
+    public void save(Post post) {
+        List<Post> posts = getAllInternal();
+        if(posts == null)
+            posts = new ArrayList<>();
+        posts.add(post);
+        savePostList(posts);
     }
 
     @Override
