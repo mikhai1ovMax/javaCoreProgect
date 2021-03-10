@@ -4,6 +4,7 @@ package controllers;
 import models.Post;
 import models.Region;
 import models.Writer;
+import models.WriterFactory;
 import repositories.GenericRepository;
 import repositories.JsonPostRepository;
 import repositories.JsonRegionRepository;
@@ -50,15 +51,33 @@ public class Controller {
     public void processRequest() {
         switch (selectedAction) {
             case 1 -> View.savedData(repository);
-            case 2 -> getModel();
-            //TODO
+            case 2 -> saveNewObject();
+            case 3 -> editObject();
+            case 4 -> deleteObjectById();
         }
     }
 
+    private void deleteObjectById() {
+        View.inputInstruction();
+        repository.deleteById(in.nextInt());
+    }
 
-    private void getModel() {
+    private void editObject(){
+        switch (selectedModelNum){
+            case 1->{
+                View.writerInputInstruction();
+                WriterFactory factory = new WriterFactory();
+                factory.setId(in.nextInt());
+                factory.setName(in.next());
+                factory.setLastName(in.next());
+                factory.setPostsByIdList(Arrays.asList(in.nextLine().split("\\s+")));
+            }
+            case 2->
+        }
+    }
+
+    private void saveNewObject() {
         switch (selectedModelNum) {
-
             case 1 -> {
                 View.writerInputInstruction();
                 int id = in.nextInt();
@@ -70,14 +89,14 @@ public class Controller {
             }
             case 2 -> {
                 View.postInputInstruction();
-                int i  = in.nextInt();
+                int i = in.nextInt();
                 String s = in.next();
                 repository.save(new Post(i, s, LocalDateTime.now()));
             }
 
             case 3 -> {
                 View.regionInputInstruction();
-                int i  = in.nextInt();
+                int i = in.nextInt();
                 String s = in.next();
                 repository.save(new Region(i, s));
             }

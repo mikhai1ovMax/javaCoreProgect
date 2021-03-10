@@ -19,4 +19,6 @@ public class Writer {
         this.posts = posts;
         this.region = region;
     }
+
+    public Writer(){}
 }

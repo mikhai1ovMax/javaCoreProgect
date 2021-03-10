@@ -1,10 +1,8 @@
 package views;
 
-import controllers.Controller;
 import repositories.GenericRepository;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class View {
 
@@ -45,6 +43,10 @@ public class View {
 
     public static void  writerInputInstruction(){
         System.out.println("enter id, first name, last name, posts id, region id(split them using enter)");
+    }
+
+    public static void inputInstruction(){
+        System.out.println("enter id");
     }
 
 }
