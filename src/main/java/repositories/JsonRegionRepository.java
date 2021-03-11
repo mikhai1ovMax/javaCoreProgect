@@ -6,15 +6,12 @@ import models.Region;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class JsonRegionRepository implements RegionRepository {
-    public static final String JSON_PATH = "region.json";
+    private final String JSON_PATH = "region.json";
 
     Type regionListType = new TypeToken<List<Region>>(){}.getType();
     Gson gson = new Gson();
@@ -51,6 +48,8 @@ public class JsonRegionRepository implements RegionRepository {
     @Override
     public Region getById(Integer id) {
         List<Region> regions = getAllInternal();
+        if(regions == null)
+            return null;
         return regions.stream().filter(region -> region.getId() == id).findFirst().orElse(null);
     }
 

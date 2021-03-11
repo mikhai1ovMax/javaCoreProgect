@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class JsonPostRepository implements PostRepository {
-    public static final String JSON_PATH = "post.json";
+    private final String JSON_PATH = "post.json";
 
     Type postListType = new TypeToken<List<Post>>(){}.getType();
     Gson gson = new Gson();
@@ -36,6 +36,7 @@ public class JsonPostRepository implements PostRepository {
         for(int i = 0; i < posts.size(); i++){
             if(posts.get(i).getId() == post.getId()) {
                 post.setUpdated(LocalDateTime.now());
+                post.setCreated(posts.get(i).getCreated());
                 posts.set(i, post);
                 break;
             }
@@ -54,6 +55,8 @@ public class JsonPostRepository implements PostRepository {
     @Override
     public Post getById(Integer id) {
         List<Post> posts = getAllInternal();
+        if(posts == null)
+            return null;
         return posts.stream().filter(post -> post.getId() == id).findFirst().orElse(null);
     }
 

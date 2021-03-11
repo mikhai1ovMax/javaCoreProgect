@@ -4,7 +4,6 @@ package controllers;
 import models.Post;
 import models.Region;
 import models.Writer;
-import models.WriterFactory;
 import repositories.GenericRepository;
 import repositories.JsonPostRepository;
 import repositories.JsonRegionRepository;
@@ -55,6 +54,7 @@ public class Controller {
             case 3 -> editObject();
             case 4 -> deleteObjectById();
         }
+        in.close();
     }
 
     private void deleteObjectById() {
@@ -62,17 +62,29 @@ public class Controller {
         repository.deleteById(in.nextInt());
     }
 
-    private void editObject(){
-        switch (selectedModelNum){
-            case 1->{
+    private void editObject() {
+        switch (selectedModelNum) {
+            case 1 -> {
                 View.writerInputInstruction();
-                WriterFactory factory = new WriterFactory();
-                factory.setId(in.nextInt());
-                factory.setName(in.next());
-                factory.setLastName(in.next());
-                factory.setPostsByIdList(Arrays.asList(in.nextLine().split("\\s+")));
+                int id = in.nextInt();
+                String name = in.next();
+                String lastname = in.next();
+                List posts = Arrays.asList(in.nextLine().split("\\s+"));
+                Region region = (Region) repository.getById(in.nextInt());
+                repository.update(new Writer(id, name, lastname, posts, region));
             }
-            case 2->
+            case 2 -> {
+                View.postInputInstruction();
+                int id = in.nextInt();
+                String content = in.nextLine();
+                repository.update(new Post(id, content));
+            }
+            case 3->{
+                View.regionInputInstruction();
+                int id = in.nextInt();
+                String name = in.next();
+                repository.update(new Region(id, name));
+            }
         }
     }
 

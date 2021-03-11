@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class JsonWriterRepository implements WriterRepository{
-    public static final String JSON_PATH = "post.json";
+    private final String JSON_PATH = "writers.json";
 
     Type writerListType = new TypeToken<List<Writer>>(){}.getType();
     Gson gson = new Gson();
@@ -51,6 +51,8 @@ public class JsonWriterRepository implements WriterRepository{
     @Override
     public Writer getById(Integer id) {
         List<Writer> writers = getAllInternal();
+        if(writers == null)
+            return null;
         return writers.stream().filter(writer -> writer.getId() == id).findFirst().orElse(null);
     }
 

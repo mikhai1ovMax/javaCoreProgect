@@ -16,5 +16,9 @@ public class Post {
         this.content = content;
         this.created = created;
     }
+    public Post(int id, String content) {
+        this.id = id;
+        this.content = content;
+    }
 
 }

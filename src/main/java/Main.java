@@ -13,13 +13,21 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+       startProgram();
+    }
+
+    public static void startProgram(){
         Controller controller = new Controller();
         Scanner in = new Scanner(System.in);
         View.startWindow();
-        controller.setSelectedAction(in.nextInt());
+        int i = in.nextInt();
+        controller.setSelectedAction(i);
         View.models();
-        controller.setRepository(in.nextInt());
+        i = in.nextInt();
+        controller.setRepository(i);
         controller.processRequest();
         in.close();
+        startProgram();
     }
+
 }
