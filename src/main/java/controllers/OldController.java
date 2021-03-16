@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 
 
-public class Controller {
+public class OldController {
 
     private int selectedAction;
     private int selectedModelNum;

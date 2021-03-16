@@ -1,14 +1,6 @@
-import controllers.Controller;
-import models.Post;
-import models.Region;
-import models.Writer;
-import repositories.GenericRepository;
-import repositories.JsonRegionRepository;
-import repositories.WriterRepository;
+import controllers.OldController;
 import views.View;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -18,14 +10,14 @@ public class Main {
 
     public static void startProgram(){
         Scanner in = new Scanner(System.in);
-        Controller controller = new Controller();
+        OldController oldController = new OldController();
         View.startWindow();
         int i = in.nextInt();
-        controller.setSelectedAction(i);
+        oldController.setSelectedAction(i);
         View.models();
         i = in.nextInt();
-        controller.setRepository(i);
-        controller.processRequest();
+        oldController.setRepository(i);
+        oldController.processRequest();
         in.close();
         startProgram();
     }
