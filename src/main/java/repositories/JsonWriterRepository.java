@@ -13,31 +13,35 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class JsonWriterRepository implements WriterRepository{
-    private final String JSON_PATH = "writers.json";
+public class JsonWriterRepository implements WriterRepository {
+    private final String JSON_PATH = "src\\main\\resources\\files\\writers.json";
 
-    Type writerListType = new TypeToken<List<Writer>>(){}.getType();
+    Type writerListType = new TypeToken<List<Writer>>() {
+    }.getType();
     Gson gson = new Gson();
 
     @Override
-    public void save(Writer writer) {
+    public Writer save(Writer writer) {
         List<Writer> writers = getAllInternal();
-        if(writers == null)
+        if (writers == null)
             writers = new ArrayList<>();
+        writer.setId(writers.size());
         writers.add(writer);
         saveWriterList(writers);
+        return writer;
     }
 
     @Override
-    public void update(Writer writer) {
+    public Writer update(Writer writer) {
         List<Writer> writers = getAllInternal();
-        for(int i = 0; i < writers.size(); i++){
-            if(writers.get(i).getId() == writer.getId()) {
+        for (int i = 0; i < writers.size(); i++) {
+            if (writers.get(i).getId() == writer.getId()) {
                 writers.set(i, writer);
                 break;
             }
         }
         saveWriterList(writers);
+        return writer;
     }
 
     private void saveWriterList(List<Writer> posts) {
@@ -51,7 +55,7 @@ public class JsonWriterRepository implements WriterRepository{
     @Override
     public Writer getById(Integer id) {
         List<Writer> writers = getAllInternal();
-        if(writers == null)
+        if (writers == null)
             return null;
         return writers.stream().filter(writer -> writer.getId() == id).findFirst().orElse(null);
     }
@@ -78,12 +82,7 @@ public class JsonWriterRepository implements WriterRepository{
     @Override
     public void deleteById(Integer id) {
         List<Writer> writers = getAllInternal();
-        for (Writer writer : writers) {
-            if(writer.getId() == id){
-                writers.remove(writer);
-                break;
-            }
-        }
+        writers.removeIf(i -> i.getId() == id);
         saveWriterList(writers);
     }
 }

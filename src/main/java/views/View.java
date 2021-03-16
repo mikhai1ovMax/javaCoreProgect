@@ -14,7 +14,7 @@ public class View {
         System.out.println("What do want to do?");
         System.out.println("1 - see saved data");
         System.out.println("2 - save new data");
-        System.out.println("3 - edit");
+        System.out.println("3 - update");
         System.out.println("4 - delete");
     }
 
@@ -34,14 +34,26 @@ public class View {
     }
 
     public static void postInputInstruction() {
+        System.out.println("enter content");
+    }
+
+    public static void postUpdateInstruction() {
         System.out.println("enter id and content(split them using enter)");
     }
 
     public static void  regionInputInstruction(){
+        System.out.println("enter region name");
+    }
+
+    public static void  regionUpdateInstruction(){
         System.out.println("enter id and region name(split them using enter)");
     }
 
     public static void  writerInputInstruction(){
+        System.out.println("enter first name, last name, posts id, region id(split them using enter)");
+    }
+
+    public static void  writerUpdateInstruction(){
         System.out.println("enter id, first name, last name, posts id, region id(split them using enter)");
     }
 

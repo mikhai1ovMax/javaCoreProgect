@@ -17,8 +17,8 @@ public class Main {
     }
 
     public static void startProgram(){
-        Controller controller = new Controller();
         Scanner in = new Scanner(System.in);
+        Controller controller = new Controller();
         View.startWindow();
         int i = in.nextInt();
         controller.setSelectedAction(i);

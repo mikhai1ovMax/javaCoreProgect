@@ -12,36 +12,42 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
 public class JsonPostRepository implements PostRepository {
-    private final String JSON_PATH = "post.json";
+    private final String JSON_PATH = "src\\main\\resources\\files\\post.json";
 
     Type postListType = new TypeToken<List<Post>>(){}.getType();
     Gson gson = new Gson();
 
     @Override
-    public void save(Post post) {
+    public Post save(Post post) {
         List<Post> posts = getAllInternal();
         if(posts == null)
             posts = new ArrayList<>();
+        post.setId(posts.size());
+        post.setCreated(LocalDateTime.now());
         posts.add(post);
         savePostList(posts);
+        return post;
     }
 
     @Override
-    public void update(Post post) {
+    public Post update(Post post) {
         List<Post> posts = getAllInternal();
         for(int i = 0; i < posts.size(); i++){
-            if(posts.get(i).getId() == post.getId()) {
+            if(posts.get(i).getContent() == post.getContent()) {
                 post.setUpdated(LocalDateTime.now());
                 post.setCreated(posts.get(i).getCreated());
                 posts.set(i, post);
                 break;
             }
         }
+
         savePostList(posts);
+        return post;
     }
 
     private void savePostList(List<Post> posts) {
@@ -82,12 +88,7 @@ public class JsonPostRepository implements PostRepository {
     @Override
     public void deleteById(Integer id) {
         List<Post> posts = getAllInternal();
-        for (Post post : posts) {
-            if(post.getId() == id){
-                posts.remove(post);
-                break;
-            }
-        }
+        posts.removeIf(i-> i.getId() == id);
         savePostList(posts);
     }
 }

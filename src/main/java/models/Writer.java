@@ -20,5 +20,13 @@ public class Writer {
         this.region = region;
     }
 
+    public Writer(String firstName, String lastName, List<Post> posts, Region region) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.posts = posts;
+        this.region = region;
+    }
+
     public Writer(){}
+
 }

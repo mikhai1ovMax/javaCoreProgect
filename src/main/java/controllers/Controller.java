@@ -10,10 +10,11 @@ import repositories.JsonRegionRepository;
 import repositories.JsonWriterRepository;
 import views.View;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+
 
 public class Controller {
 
@@ -37,9 +38,15 @@ public class Controller {
     public void setRepository(int num) {
         selectedModelNum = num;
         switch (num) {
-            case 1 -> repository = new JsonWriterRepository();
-            case 2 -> repository = new JsonPostRepository();
-            case 3 -> repository = new JsonRegionRepository();
+            case 1:
+                repository = new JsonWriterRepository();
+                break;
+            case 2:
+                repository = new JsonPostRepository();
+                break;
+            case 3:
+                repository = new JsonRegionRepository();
+                break;
         }
     }
 
@@ -49,10 +56,14 @@ public class Controller {
 
     public void processRequest() {
         switch (selectedAction) {
-            case 1 -> View.savedData(repository);
-            case 2 -> saveNewObject();
-            case 3 -> editObject();
-            case 4 -> deleteObjectById();
+            case 1: View.savedData(repository);
+                break;
+            case 2: saveNewObject();
+                break;
+            case 3: updateObject();
+                break;
+            case 4: deleteObjectById();
+                break;
         }
         in.close();
     }
@@ -62,56 +73,66 @@ public class Controller {
         repository.deleteById(in.nextInt());
     }
 
-    private void editObject() {
+    private void updateObject() {
+        int id;
+        String name;
         switch (selectedModelNum) {
-            case 1 -> {
-                View.writerInputInstruction();
-                int id = in.nextInt();
-                String name = in.next();
+            case 1:
+                View.writerUpdateInstruction();
+                id = in.nextInt();
+                name = in.next();
                 String lastname = in.next();
                 List posts = Arrays.asList(in.nextLine().split("\\s+"));
                 Region region = (Region) repository.getById(in.nextInt());
-                repository.update(new Writer(id, name, lastname, posts, region));
-            }
-            case 2 -> {
-                View.postInputInstruction();
-                int id = in.nextInt();
+                Writer writer = (Writer) repository.update(new Writer(id, name, lastname, posts, region));
+                System.out.println(writer);
+                break;
+            case 2:
+                View.postUpdateInstruction();
                 String content = in.nextLine();
-                repository.update(new Post(id, content));
-            }
-            case 3->{
-                View.regionInputInstruction();
-                int id = in.nextInt();
-                String name = in.next();
-                repository.update(new Region(id, name));
-            }
+                Post post = (Post) repository.update(new Post(content));
+                System.out.println(post);
+                break;
+            case 3:
+                View.regionUpdateInstruction();
+                id = in.nextInt();
+                name = in.next();
+                Region reg = (Region) repository.update(new Region(id, name));
+                System.out.println(reg);
+                break;
         }
     }
 
     private void saveNewObject() {
+        String name;
+        String content;
         switch (selectedModelNum) {
-            case 1 -> {
+            case 1:
                 View.writerInputInstruction();
-                int id = in.nextInt();
-                String name = in.next();
+                System.out.println("name: ");
+                name = in.next();
+                System.out.println("last name: ");
                 String lastname = in.next();
-                List posts = Arrays.asList(in.nextLine().split("\\s+"));
+                System.out.println("posts: ");
+                List posts = Arrays.asList(in.next().split("\\s+"));
+                System.out.println("region: ");
                 Region region = (Region) repository.getById(in.nextInt());
-                repository.save(new Writer(id, name, lastname, posts, region));
-            }
-            case 2 -> {
+                Writer writer = (Writer) repository.save(new Writer(name, lastname, posts, region));
+                System.out.println(writer);
+                break;
+            case 2:
                 View.postInputInstruction();
-                int i = in.nextInt();
-                String s = in.next();
-                repository.save(new Post(i, s, LocalDateTime.now()));
-            }
+                content = in.next();
+                Post post = (Post) repository.save(new Post(content));
+                System.out.println(post);
+                break;
 
-            case 3 -> {
+            case 3:
                 View.regionInputInstruction();
-                int i = in.nextInt();
-                String s = in.next();
-                repository.save(new Region(i, s));
-            }
+                content = in.next();
+                Region reg = (Region) repository.save(new Region(content));
+                System.out.println(reg);
+                break;
         }
     }
 

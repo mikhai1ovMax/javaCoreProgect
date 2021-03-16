@@ -2,8 +2,10 @@ package repositories;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import models.Post;
 import models.Region;
 
+import javax.print.DocFlavor;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -11,22 +13,24 @@ import java.util.List;
 import java.util.Scanner;
 
 public class JsonRegionRepository implements RegionRepository {
-    private final String JSON_PATH = "region.json";
+    private final String JSON_PATH = "src\\main\\resources\\files\\region.json";
 
     Type regionListType = new TypeToken<List<Region>>(){}.getType();
     Gson gson = new Gson();
 
     @Override
-    public void save(Region region) {
+    public Region save(Region region) {
         List<Region> regions = getAllInternal();
         if(regions == null)
             regions = new ArrayList<>();
+        region.setId(regions.size());
         regions.add(region);
         saveRegionList(regions);
+        return region;
     }
 
     @Override
-    public void update(Region region) {
+    public Region update(Region region) {
         List<Region> regions = getAllInternal();
         for(int i = 0; i < regions.size(); i++){
             if(regions.get(i).getId() == region.getId()) {
@@ -35,6 +39,7 @@ public class JsonRegionRepository implements RegionRepository {
             }
         }
         saveRegionList(regions);
+        return region;
     }
 
     private void saveRegionList(List<Region> regions){
@@ -75,12 +80,7 @@ public class JsonRegionRepository implements RegionRepository {
     @Override
     public void deleteById(Integer id) {
         List<Region> regions = getAllInternal();
-        for (Region region : regions) {
-            if(region.getId() == id){
-                regions.remove(region);
-                break;
-            }
-        }
+        regions.removeIf(i-> i.getId() == id);
         saveRegionList(regions);
     }
 }
