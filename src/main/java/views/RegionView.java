@@ -4,6 +4,7 @@ import models.Region;
 import repositories.GenericRepository;
 import repositories.JsonRegionRepository;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class RegionView implements GenericView<Region, Integer> {
@@ -13,7 +14,11 @@ public class RegionView implements GenericView<Region, Integer> {
 
     @Override
     public void printAll() {
-        repository.getAll().forEach(x -> System.out.println(x.toString()));
+        List regions = repository.getAll();
+        if(regions != null)
+            repository.getAll().forEach(x -> System.out.println(x.toString()));
+        else
+            System.out.println("no saved data");
     }
 
     @Override
@@ -25,8 +30,7 @@ public class RegionView implements GenericView<Region, Integer> {
     @Override
     public Region getUpdatedObject() {
         region = new Region();
-        System.out.println("enter Id");
-        region.setId(scanner.nextInt());
+        region.setId(getIdFromConsole());
         System.out.println("enter new region name");
         region.setName(scanner.next());
         return region;

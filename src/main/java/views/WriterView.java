@@ -16,7 +16,11 @@ public class WriterView implements GenericView<Writer, Integer> {
 
     @Override
     public void printAll() {
-        repository.getAll().forEach(x -> System.out.println(x.toString()));
+        List writers = repository.getAll();
+        if(writers != null)
+            repository.getAll().forEach(x -> System.out.println(x.toString()));
+        else
+            System.out.println("no saved data");
     }
 
     @Override
@@ -27,8 +31,7 @@ public class WriterView implements GenericView<Writer, Integer> {
     @Override
     public Writer getUpdatedObject() {
         writer = getWriterWithoutId();
-        System.out.println("enter Id");
-        writer.setId(scanner.nextInt());
+        writer.setId(getIdFromConsole());
         return writer;
     }
 

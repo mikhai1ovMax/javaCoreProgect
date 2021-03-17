@@ -4,6 +4,7 @@ import models.Post;
 import repositories.GenericRepository;
 import repositories.JsonPostRepository;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class PostView implements GenericView<Post, Integer> {
@@ -13,7 +14,11 @@ public class PostView implements GenericView<Post, Integer> {
 
     @Override
     public void printAll() {
-        repository.getAll().forEach(x -> System.out.println(x.toString()));
+        List posts = repository.getAll();
+        if(posts != null)
+            repository.getAll().forEach(x -> System.out.println(x.toString()));
+        else
+            System.out.println("no saved data");
     }
 
     @Override
@@ -24,8 +29,7 @@ public class PostView implements GenericView<Post, Integer> {
     @Override
     public Post getUpdatedObject() {
         post = new Post();
-        System.out.println("enter Id");
-        post.setId(scanner.nextInt());
+        post.setId(getIdFromConsole());
         System.out.println("enter new content");
         post.setContent(scanner.next());
         return post;
