@@ -7,27 +7,28 @@ import repositories.JsonWriterRepository;
 import views.RegionView;
 import views.WriterView;
 
+import java.util.List;
+
 public class WriterController implements GenericController<Writer> {
-    WriterView view = new WriterView();
     JsonWriterRepository repository = new JsonWriterRepository();
 
     @Override
-    public void show() {
-        view.printAll();
+    public List<Writer> getAll() {
+        return repository.getAll();
     }
 
     @Override
-    public Writer save() {
-        return repository.save(view.getNewObject());
+    public Writer save(Writer object) {
+        return repository.save(object);
     }
 
     @Override
-    public Writer update() {
-        return repository.update(view.getUpdatedObject());
+    public Writer update(Writer object) {
+        return repository.update(object);
     }
 
     @Override
-    public void delete() {
-        repository.deleteById(view.getIdFromConsole());
+    public void delete(int id) {
+        repository.deleteById(id);
     }
 }

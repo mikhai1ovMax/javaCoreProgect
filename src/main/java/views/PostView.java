@@ -1,5 +1,6 @@
 package views;
 
+import controllers.PostController;
 import models.Post;
 import repositories.GenericRepository;
 import repositories.JsonPostRepository;
@@ -8,39 +9,41 @@ import java.util.List;
 import java.util.Scanner;
 
 public class PostView implements GenericView<Post, Integer> {
-    GenericRepository repository = new JsonPostRepository();
+    PostController controller = new PostController();
     Scanner scanner = new Scanner(System.in);
     Post post;
 
     @Override
     public void printAll() {
-        List posts = repository.getAll();
+        List posts = controller.getAll();
         if(posts != null)
-            repository.getAll().forEach(x -> System.out.println(x.toString()));
+            controller.getAll().forEach(x -> System.out.println(x.toString()));
         else
             System.out.println("no saved data");
     }
 
     @Override
-    public void printById(Integer id) {
-        System.out.println(repository.getById(id).toString());
-    }
-
-    @Override
-    public Post getUpdatedObject() {
+    public Post Update() {
         post = new Post();
         post.setId(getIdFromConsole());
         System.out.println("enter new content");
         post.setContent(scanner.next());
+        controller.update(post);
         return post;
     }
 
     @Override
-    public Post getNewObject() {
+    public Post save() {
         post = new Post();
         System.out.println("enter post content");
         post.setContent(scanner.next());
+        controller.save(post);
         return post;
+    }
 
+    @Override
+    public void delete() {
+        System.out.println("enter id");
+        controller.delete(scanner.nextInt());
     }
 }

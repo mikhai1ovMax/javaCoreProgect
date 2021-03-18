@@ -11,21 +11,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class JsonPostRepository implements PostRepository {
     private final String JSON_PATH = "src\\main\\resources\\files\\post.json";
-
-    Type postListType = new TypeToken<List<Post>>(){}.getType();
-    Gson gson = new Gson();
+    private final Type postListType = new TypeToken<List<Post>>(){}.getType();
+    private final Gson gson = new Gson();
 
     @Override
     public Post save(Post post) {
         List<Post> posts = getAllInternal();
-        if(posts == null)
+        if(Objects.isNull(posts))
             posts = new ArrayList<>();
         post.setId(posts.size());
         post.setCreated(LocalDateTime.now());
@@ -45,8 +42,14 @@ public class JsonPostRepository implements PostRepository {
                 break;
             }
         }
-
         savePostList(posts);
+
+//        List<Post> posts = getAllInternal();
+//        posts.get(post.getId()-1).setContent(post.getContent());
+//        posts.get(post.getId()-1).setUpdated(LocalDateTime.now());
+//        savePostList(posts);
+//        return posts.get(post.getId()-1);
+
         return post;
     }
 

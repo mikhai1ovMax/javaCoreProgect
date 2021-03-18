@@ -1,5 +1,6 @@
 package views;
 
+import controllers.WriterController;
 import models.Writer;
 import models.WriterFactory;
 import repositories.*;
@@ -10,34 +11,37 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class WriterView implements GenericView<Writer, Integer> {
-    GenericRepository repository = new JsonWriterRepository();
+    WriterController controller = new WriterController();
     Scanner scanner = new Scanner(System.in);
     Writer writer;
 
     @Override
     public void printAll() {
-        List writers = repository.getAll();
+        List writers = controller.getAll();
         if(writers != null)
-            repository.getAll().forEach(x -> System.out.println(x.toString()));
+            controller.getAll().forEach(x -> System.out.println(x.toString()));
         else
             System.out.println("no saved data");
     }
 
-    @Override
-    public void printById(Integer id) {
-        System.out.println(repository.getById(id).toString());
-    }
 
     @Override
-    public Writer getUpdatedObject() {
+    public Writer Update() {
         writer = getWriterWithoutId();
         writer.setId(getIdFromConsole());
+        controller.update(writer);
         return writer;
     }
 
     @Override
-    public Writer getNewObject() {
-        return getWriterWithoutId();
+    public Writer save() {
+        return controller.save(getWriterWithoutId());
+    }
+
+    @Override
+    public void delete() {
+        System.out.println("enter id");
+        controller.delete(scanner.nextInt());
     }
 
     private Writer getWriterWithoutId() {

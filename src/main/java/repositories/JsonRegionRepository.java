@@ -10,18 +10,18 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class JsonRegionRepository implements RegionRepository {
     private final String JSON_PATH = "src\\main\\resources\\files\\region.json";
-
-    Type regionListType = new TypeToken<List<Region>>(){}.getType();
-    Gson gson = new Gson();
+    private final Type regionListType = new TypeToken<List<Region>>(){}.getType();
+    private final Gson gson = new Gson();
 
     @Override
     public Region save(Region region) {
         List<Region> regions = getAllInternal();
-        if(regions == null)
+        if(Objects.isNull(regions))
             regions = new ArrayList<>();
         region.setId(regions.size());
         regions.add(region);

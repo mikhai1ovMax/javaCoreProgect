@@ -7,27 +7,29 @@ import repositories.JsonRegionRepository;
 import views.PostView;
 import views.RegionView;
 
+import java.util.List;
+
 public class RegionController implements GenericController<Region> {
-    RegionView view = new RegionView();
+
     JsonRegionRepository repository = new JsonRegionRepository();
 
     @Override
-    public void show() {
-        view.printAll();
+    public List<Region> getAll() {
+        return repository.getAll();
     }
 
     @Override
-    public Region save() {
-        return repository.save(view.getNewObject());
+    public Region save(Region object) {
+        return repository.save(object);
     }
 
     @Override
-    public Region update() {
-        return repository.update(view.getUpdatedObject());
+    public Region update(Region object) {
+        return repository.update(object);
     }
 
     @Override
-    public void delete() {
-        repository.deleteById(view.getIdFromConsole());
+    public void delete(int id) {
+        repository.deleteById(id);
     }
 }

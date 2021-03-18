@@ -11,19 +11,19 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class JsonWriterRepository implements WriterRepository {
     private final String JSON_PATH = "src\\main\\resources\\files\\writers.json";
-
-    Type writerListType = new TypeToken<List<Writer>>() {
-    }.getType();
-    Gson gson = new Gson();
+    private final Type writerListType = new TypeToken<List<Writer>>(){}.getType();
+    private final Gson gson = new Gson();
 
     @Override
     public Writer save(Writer writer) {
         List<Writer> writers = getAllInternal();
-        if (writers == null)
+
+        if (Objects.isNull(writers))
             writers = new ArrayList<>();
         writer.setId(writers.size());
         writers.add(writer);
