@@ -16,13 +16,14 @@ import java.util.stream.Collectors;
 
 public class JsonPostRepository implements PostRepository {
     private final String JSON_PATH = "src\\main\\resources\\files\\post.json";
-    private final Type postListType = new TypeToken<List<Post>>(){}.getType();
+    private final Type postListType = new TypeToken<List<Post>>() {
+    }.getType();
     private final Gson gson = new Gson();
 
     @Override
     public Post save(Post post) {
         List<Post> posts = getAllInternal();
-        if(Objects.isNull(posts))
+        if (Objects.isNull(posts))
             posts = new ArrayList<>();
         post.setId(posts.size());
         post.setCreated(LocalDateTime.now());
@@ -34,22 +35,13 @@ public class JsonPostRepository implements PostRepository {
     @Override
     public Post update(Post post) {
         List<Post> posts = getAllInternal();
-        for(int i = 0; i < posts.size(); i++){
-            if(posts.get(i).getContent() == post.getContent()) {
-                post.setUpdated(LocalDateTime.now());
-                post.setCreated(posts.get(i).getCreated());
-                posts.set(i, post);
-                break;
+        posts.forEach(x -> {
+            if (x.getId() == post.getId()) {
+                x.setContent(post.getContent());
+                x.setUpdated(LocalDateTime.now());
             }
-        }
+        });
         savePostList(posts);
-
-//        List<Post> posts = getAllInternal();
-//        posts.get(post.getId()-1).setContent(post.getContent());
-//        posts.get(post.getId()-1).setUpdated(LocalDateTime.now());
-//        savePostList(posts);
-//        return posts.get(post.getId()-1);
-
         return post;
     }
 
@@ -64,7 +56,7 @@ public class JsonPostRepository implements PostRepository {
     @Override
     public Post getById(Integer id) {
         List<Post> posts = getAllInternal();
-        if(posts == null)
+        if (posts == null)
             return null;
         return posts.stream().filter(post -> post.getId() == id).findFirst().orElse(null);
     }
@@ -91,7 +83,7 @@ public class JsonPostRepository implements PostRepository {
     @Override
     public void deleteById(Integer id) {
         List<Post> posts = getAllInternal();
-        posts.removeIf(i-> i.getId() == id);
+        posts.removeIf(i -> i.getId() == id);
         savePostList(posts);
     }
 }

@@ -8,6 +8,7 @@ import models.Region;
 import javax.print.DocFlavor;
 import java.io.*;
 import java.lang.reflect.Type;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,12 +33,10 @@ public class JsonRegionRepository implements RegionRepository {
     @Override
     public Region update(Region region) {
         List<Region> regions = getAllInternal();
-        for(int i = 0; i < regions.size(); i++){
-            if(regions.get(i).getId() == region.getId()) {
-                regions.set(i, region);
-                break;
-            }
-        }
+        regions.forEach(x -> {
+            if (x.getId() == region.getId())
+                x.setName(region.getName());
+        });
         saveRegionList(regions);
         return region;
     }
