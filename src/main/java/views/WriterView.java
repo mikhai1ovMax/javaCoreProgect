@@ -4,6 +4,8 @@ import controllers.WriterController;
 import models.Writer;
 import models.WriterFactory;
 import repositories.*;
+import repositories.jsonRepositoires.JsonPostRepository;
+import repositories.jsonRepositoires.JsonRegionRepository;
 
 import java.util.Arrays;
 import java.util.List;

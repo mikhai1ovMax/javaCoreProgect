@@ -1,8 +1,9 @@
-package repositories;
+package repositories.jsonRepositoires;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import models.Writer;
+import repositories.WriterRepository;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

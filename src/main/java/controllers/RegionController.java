@@ -1,11 +1,7 @@
 package controllers;
 
-import models.Post;
 import models.Region;
-import repositories.JsonPostRepository;
-import repositories.JsonRegionRepository;
-import views.PostView;
-import views.RegionView;
+import repositories.jsonRepositoires.JsonRegionRepository;
 
 import java.util.List;
 

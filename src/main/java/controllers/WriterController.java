@@ -1,11 +1,7 @@
 package controllers;
 
-import models.Region;
 import models.Writer;
-import repositories.JsonRegionRepository;
-import repositories.JsonWriterRepository;
-import views.RegionView;
-import views.WriterView;
+import repositories.jsonRepositoires.JsonWriterRepository;
 
 import java.util.List;
 

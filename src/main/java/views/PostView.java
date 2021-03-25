@@ -2,8 +2,6 @@ package views;
 
 import controllers.PostController;
 import models.Post;
-import repositories.GenericRepository;
-import repositories.JsonPostRepository;
 
 import java.util.List;
 import java.util.Scanner;

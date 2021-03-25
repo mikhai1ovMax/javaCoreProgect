@@ -1,9 +1,10 @@
-package repositories;
+package repositories.jsonRepositoires;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import models.Post;
 import models.Region;
+import repositories.PostRepository;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

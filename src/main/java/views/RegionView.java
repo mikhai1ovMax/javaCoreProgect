@@ -1,10 +1,7 @@
 package views;
 
 import controllers.RegionController;
-import controllers.WriterController;
 import models.Region;
-import repositories.GenericRepository;
-import repositories.JsonRegionRepository;
 
 import java.util.List;
 import java.util.Objects;

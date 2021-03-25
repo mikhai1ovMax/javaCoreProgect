@@ -1,7 +1,7 @@
 package models;
 
-import repositories.JsonPostRepository;
-import repositories.JsonRegionRepository;
+import repositories.jsonRepositoires.JsonPostRepository;
+import repositories.jsonRepositoires.JsonRegionRepository;
 
 import java.util.List;
 
