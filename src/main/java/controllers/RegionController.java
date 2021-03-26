@@ -2,30 +2,31 @@ package controllers;
 
 import models.Region;
 import repositories.jsonRepositoires.JsonRegionRepository;
+import services.RegionService;
 
 import java.util.List;
 
 public class RegionController implements GenericController<Region> {
 
-    JsonRegionRepository repository = new JsonRegionRepository();
+    RegionService service = new RegionService();
 
     @Override
     public List<Region> getAll() {
-        return repository.getAll();
+        return service.getAll();
     }
 
     @Override
     public Region save(Region object) {
-        return repository.save(object);
+        return service.save(object);
     }
 
     @Override
     public Region update(Region object) {
-        return repository.update(object);
+        return service.update(object);
     }
 
     @Override
     public void delete(int id) {
-        repository.deleteById(id);
+        service.deleteById(id);
     }
 }

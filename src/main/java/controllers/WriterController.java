@@ -2,29 +2,31 @@ package controllers;
 
 import models.Writer;
 import repositories.jsonRepositoires.JsonWriterRepository;
+import services.WriterService;
 
 import java.util.List;
 
 public class WriterController implements GenericController<Writer> {
-    JsonWriterRepository repository = new JsonWriterRepository();
+
+    WriterService service = new WriterService();
 
     @Override
     public List<Writer> getAll() {
-        return repository.getAll();
+        return service.getAll();
     }
 
     @Override
     public Writer save(Writer object) {
-        return repository.save(object);
+        return service.save(object);
     }
 
     @Override
     public Writer update(Writer object) {
-        return repository.update(object);
+        return service.update(object);
     }
 
     @Override
     public void delete(int id) {
-        repository.deleteById(id);
+        service.deleteById(id);
     }
 }
