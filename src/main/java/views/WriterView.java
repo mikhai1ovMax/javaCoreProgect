@@ -53,7 +53,7 @@ public class WriterView implements GenericView<Writer, Integer> {
 
         System.out.println("enter name");
         writerFactory.setFirstName(scanner.next());
-        System.out.printf("enter last name");
+        System.out.println("enter last name");
         writerFactory.setLastName(scanner.next());
         System.out.println("enter posts id");
         List<Integer> postsId = Arrays.stream(scanner.nextLine()
@@ -61,7 +61,7 @@ public class WriterView implements GenericView<Writer, Integer> {
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
         writerFactory.setPostsByIdList(postsId);
-        System.out.println("enter region");
+        System.out.println("enter region id");
         writerFactory.setRegionById(scanner.nextInt());
         return writerFactory.getWriter();
     }

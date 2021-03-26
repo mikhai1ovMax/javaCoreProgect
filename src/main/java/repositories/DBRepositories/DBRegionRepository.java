@@ -24,12 +24,30 @@ public class DBRegionRepository implements RegionRepository {
 
     @Override
     public Region save(Region object) {
-        return null;
+        try {
+            preparedStatement = connection.prepareStatement("insert into region values (?,?)");
+            preparedStatement.setInt(1, 0);
+            preparedStatement.setString(2, object.getName());
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        closeAll();
+        return object;
     }
 
     @Override
     public Region update(Region object) {
-        return null;
+        try {
+            preparedStatement = connection.prepareStatement("update region set name = ? where id = ?");
+            preparedStatement.setString(1, object.getName());
+            preparedStatement.setInt(2, object.getId());
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        closeAll();
+        return object;
     }
 
     @Override
@@ -74,6 +92,7 @@ public class DBRegionRepository implements RegionRepository {
                 SQLException throwables) {
             throwables.printStackTrace();
         }
+        closeAll();
     }
 
     private Region getNextRegion(ResultSet resultSet) {

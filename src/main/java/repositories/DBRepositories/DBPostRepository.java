@@ -18,6 +18,7 @@ public class DBPostRepository implements PostRepository {
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final String getAllQuery = "select * from post";
 
     public DBPostRepository() {
@@ -30,12 +31,52 @@ public class DBPostRepository implements PostRepository {
 
     @Override
     public Post save(Post object) {
-        return null;
+        try {
+            preparedStatement = connection.prepareStatement("insert into region values (?,?,?,?)");
+            preparedStatement.setInt(1, 0);
+            preparedStatement.setString(2, object.getContent());
+            preparedStatement.setString(3, object.getCreated().format(formatter));
+            preparedStatement.setString(4, object.getUpdated().format(formatter));
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        closeAll();
+        return object;
+    }
+
+    public List<Post> saveWriterIds(List<Post> posts, int writerId) {
+        try {
+            preparedStatement = connection.prepareStatement("update post set writer_id = ? where id = ?");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        posts.forEach(x -> {
+            try {
+                preparedStatement.setInt(1, writerId);
+                preparedStatement.setInt(2, x.getId());
+                preparedStatement.execute();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+        closeAll();
+        return posts;
     }
 
     @Override
     public Post update(Post object) {
-        return null;
+        try {
+            preparedStatement = connection.prepareStatement("update post set content = ?, updated = ? where id = ?");
+            preparedStatement.setString(1, object.getContent());
+            preparedStatement.setString(2, LocalDateTime.now().format(formatter));
+            preparedStatement.setInt(3, object.getId());
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        closeAll();
+        return object;
     }
 
     @Override
@@ -79,6 +120,7 @@ public class DBPostRepository implements PostRepository {
                 SQLException throwables) {
             throwables.printStackTrace();
         }
+        closeAll();
     }
 
     public List<Post> getPostsByWriterId(int id) {
@@ -98,7 +140,6 @@ public class DBPostRepository implements PostRepository {
     }
 
     private Post getNextPost(ResultSet resultSet) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         Post post = new Post();
         try {
             post.setId(resultSet.getInt("id"));
@@ -108,7 +149,6 @@ public class DBPostRepository implements PostRepository {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
         return post;
     }
 

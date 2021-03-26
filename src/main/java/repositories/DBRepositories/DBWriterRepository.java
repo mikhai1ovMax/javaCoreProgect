@@ -1,6 +1,5 @@
 package repositories.DBRepositories;
 
-import models.Region;
 import models.Writer;
 import repositories.WriterRepository;
 
@@ -27,12 +26,33 @@ public class DBWriterRepository implements WriterRepository {
 
     @Override
     public Writer save(Writer object) {
+        try {
+            preparedStatement = connection.prepareStatement("insert into writer values (?,?,?,?)");
+            preparedStatement.setInt(1, 0);
+            preparedStatement.setString(2, object.getFirstName());
+            preparedStatement.setString(3, object.getLastName());
+            preparedStatement.setInt(4, object.getRegion().getId());
+            preparedStatement.execute();
+            dbPostRepository.saveWriterIds(object.getPosts(), object.getId());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        closeAll();
         return null;
     }
 
     @Override
     public Writer update(Writer object) {
-        return null;
+        try {
+            preparedStatement = connection.prepareStatement("update writer set first_name = ?, last_name = ? where id = ?");
+            preparedStatement.setString(1, object.getFirstName());
+            preparedStatement.setString(2, object.getLastName());
+            preparedStatement.setInt(3, object.getId());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        closeAll();
+        return object;
     }
 
     @Override
@@ -76,6 +96,7 @@ public class DBWriterRepository implements WriterRepository {
                 SQLException throwables) {
             throwables.printStackTrace();
         }
+        closeAll();
     }
 
     private Writer getNextWriter(ResultSet resultSet) {
