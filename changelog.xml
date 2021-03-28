@@ -1,0 +1,54 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="max (generated)" id="1616943086039-1">
+        <createTable tableName="post">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="content" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated" type="datetime"/>
+            <column name="writer_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="max (generated)" id="1616943086039-2">
+        <createTable tableName="region">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(45)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="max (generated)" id="1616943086039-3">
+        <createTable tableName="writer">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(45)"/>
+            <column name="last_name" type="VARCHAR(45)"/>
+            <column name="region_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="max (generated)" id="1616943086039-4">
+        <createIndex indexName="post_writer_id_fk" tableName="post">
+            <column name="writer_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="max (generated)" id="1616943086039-5">
+        <createIndex indexName="writer_region_id_fk" tableName="writer">
+            <column name="region_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="max (generated)" id="1616943086039-6">
+        <addForeignKeyConstraint baseColumnNames="writer_id" baseTableName="post" constraintName="post_writer_id_fk" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="writer" validate="true"/>
+    </changeSet>
+    <changeSet author="max (generated)" id="1616943086039-7">
+        <addForeignKeyConstraint baseColumnNames="region_id" baseTableName="writer" constraintName="writer_region_id_fk" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="region" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
