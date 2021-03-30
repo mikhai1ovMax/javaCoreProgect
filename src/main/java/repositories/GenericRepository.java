@@ -12,4 +12,5 @@ public interface GenericRepository <T, Integer>{
     T getById(Integer id);
     List<T> getAll();
     void deleteById(Integer id);
+    void closeConnection();
 }

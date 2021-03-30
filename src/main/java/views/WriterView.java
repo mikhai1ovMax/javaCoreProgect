@@ -46,6 +46,12 @@ public class WriterView implements GenericView<Writer, Integer> {
         controller.delete(scanner.nextInt());
     }
 
+    @Override
+    public void exit() {
+        controller.closeConnection();
+    }
+
+
     private Writer getWriterWithoutId() {
         PostRepository postsRepo = new JsonPostRepository();
         RegionRepository regionRepo = new JsonRegionRepository();

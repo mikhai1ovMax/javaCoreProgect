@@ -17,13 +17,17 @@ import java.util.Scanner;
 
 public class JsonRegionRepository implements RegionRepository {
     private final String JSON_PATH = "src\\main\\resources\\files\\region.json";
-    private final Type regionListType = new TypeToken<List<Region>>(){}.getType();
+    private final Type regionListType = new TypeToken<List<Region>>() {
+    }.getType();
     private final Gson gson = new Gson();
+
+    private Scanner scanner;
+    private FileWriter fileWriter;
 
     @Override
     public Region save(Region region) {
         List<Region> regions = getAllInternal();
-        if(Objects.isNull(regions))
+        if (Objects.isNull(regions))
             regions = new ArrayList<>();
         region.setId(regions.size());
         regions.add(region);
@@ -42,8 +46,9 @@ public class JsonRegionRepository implements RegionRepository {
         return region;
     }
 
-    private void saveRegionList(List<Region> regions){
-        try (FileWriter fileWriter = new FileWriter(JSON_PATH)){
+    private void saveRegionList(List<Region> regions) {
+        try {
+            FileWriter fileWriter = new FileWriter(JSON_PATH);
             fileWriter.write(gson.toJson(regions));
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,7 +58,7 @@ public class JsonRegionRepository implements RegionRepository {
     @Override
     public Region getById(Integer id) {
         List<Region> regions = getAllInternal();
-        if(regions == null)
+        if (regions == null)
             return null;
         return regions.stream().filter(region -> region.getId() == id).findFirst().orElse(null);
     }
@@ -66,7 +71,7 @@ public class JsonRegionRepository implements RegionRepository {
     private List<Region> getAllInternal() {
         StringBuilder stringBuilder = new StringBuilder();
         try {
-            Scanner scanner = new Scanner(new FileReader(JSON_PATH));
+            scanner = new Scanner(new FileReader(JSON_PATH));
             while (scanner.hasNext()) {
                 stringBuilder.append(scanner.next());
             }
@@ -80,7 +85,17 @@ public class JsonRegionRepository implements RegionRepository {
     @Override
     public void deleteById(Integer id) {
         List<Region> regions = getAllInternal();
-        regions.removeIf(i-> i.getId() == id);
+        regions.removeIf(i -> i.getId() == id);
         saveRegionList(regions);
+    }
+
+    @Override
+    public void closeConnection() {
+        scanner.close();
+        try {
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

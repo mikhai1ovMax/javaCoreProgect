@@ -16,6 +16,8 @@ public class DBWriterRepository implements WriterRepository {
     private DBRegionRepository dbRegionRepository = new DBRegionRepository();
     private final String getAllQuery = "select * from writer";
 
+
+
     public DBWriterRepository() {
         try {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
@@ -37,7 +39,6 @@ public class DBWriterRepository implements WriterRepository {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        closeAll();
         return null;
     }
 
@@ -51,7 +52,6 @@ public class DBWriterRepository implements WriterRepository {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        closeAll();
         return object;
     }
 
@@ -66,7 +66,6 @@ public class DBWriterRepository implements WriterRepository {
             throwables.printStackTrace();
         }
         Writer writer = getNextWriter(resultSet);
-        closeAll();
         return writer;
     }
 
@@ -79,7 +78,6 @@ public class DBWriterRepository implements WriterRepository {
             while (resultSet.next()) {
                 writers.add(getNextWriter(resultSet));
             }
-            closeAll();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -96,7 +94,6 @@ public class DBWriterRepository implements WriterRepository {
                 SQLException throwables) {
             throwables.printStackTrace();
         }
-        closeAll();
     }
 
     private Writer getNextWriter(ResultSet resultSet) {
@@ -114,8 +111,11 @@ public class DBWriterRepository implements WriterRepository {
         return writer;
     }
 
-    private void closeAll() {
+    @Override
+    public void closeConnection() {
         try {
+            dbPostRepository.closeConnection();
+            dbRegionRepository.closeConnection();
             resultSet.close();
             preparedStatement.close();
             connection.close();

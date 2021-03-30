@@ -29,4 +29,9 @@ public class WriterService implements GenericService<Writer>{
     public void deleteById(int id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public void closeConnection() {
+        repository.closeConnection();
+    }
 }

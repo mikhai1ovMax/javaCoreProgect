@@ -13,5 +13,6 @@ public interface GenericView<T, Integer> {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextInt();
     }
+    public void exit();
 
 }

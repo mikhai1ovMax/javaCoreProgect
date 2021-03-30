@@ -14,6 +14,7 @@ public class View {
         System.out.println("2 - save new data");
         System.out.println("3 - update");
         System.out.println("4 - delete");
+        System.out.println("5 - exit");
     }
 
     public static void models() {

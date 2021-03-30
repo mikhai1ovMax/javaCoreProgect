@@ -30,4 +30,9 @@ public class PostController implements GenericController<Post> {
     public void delete(int id) {
         service.deleteById(id);
     }
+
+    @Override
+    public void closeConnection() {
+        service.closeConnection();
+    }
 }

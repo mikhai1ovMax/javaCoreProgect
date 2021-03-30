@@ -32,7 +32,6 @@ public class DBRegionRepository implements RegionRepository {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        closeAll();
         return object;
     }
 
@@ -46,7 +45,6 @@ public class DBRegionRepository implements RegionRepository {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        closeAll();
         return object;
     }
 
@@ -62,7 +60,6 @@ public class DBRegionRepository implements RegionRepository {
             throwables.printStackTrace();
         }
         Region region = getNextRegion(resultSet);
-        closeAll();
         return region;
     }
 
@@ -75,7 +72,6 @@ public class DBRegionRepository implements RegionRepository {
             while (resultSet.next()) {
                 regions.add(getNextRegion(resultSet));
             }
-            closeAll();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -92,7 +88,6 @@ public class DBRegionRepository implements RegionRepository {
                 SQLException throwables) {
             throwables.printStackTrace();
         }
-        closeAll();
     }
 
     private Region getNextRegion(ResultSet resultSet) {
@@ -106,7 +101,8 @@ public class DBRegionRepository implements RegionRepository {
         return region;
     }
 
-    private void closeAll() {
+    @Override
+    public void closeConnection() {
         try {
             resultSet.close();
             preparedStatement.close();

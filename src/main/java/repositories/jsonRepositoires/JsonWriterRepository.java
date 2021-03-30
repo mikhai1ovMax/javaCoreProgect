@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,6 +20,9 @@ public class JsonWriterRepository implements WriterRepository {
     private final String JSON_PATH = "src\\main\\resources\\files\\writers.json";
     private final Type writerListType = new TypeToken<List<Writer>>(){}.getType();
     private final Gson gson = new Gson();
+
+    private FileWriter fileWriter;
+    private Scanner scanner;
 
     @Override
     public Writer save(Writer writer) {
@@ -46,11 +50,13 @@ public class JsonWriterRepository implements WriterRepository {
     }
 
     private void saveWriterList(List<Writer> posts) {
-        try (FileWriter fileWriter = new FileWriter(JSON_PATH)) {
+        try {
+            fileWriter = new FileWriter(JSON_PATH);
             fileWriter.write(gson.toJson(posts));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -69,7 +75,7 @@ public class JsonWriterRepository implements WriterRepository {
     private List<Writer> getAllInternal() {
         StringBuilder stringBuilder = new StringBuilder();
         try {
-            Scanner scanner = new Scanner(new FileReader(JSON_PATH));
+            scanner = new Scanner(new FileReader(JSON_PATH));
             while (scanner.hasNext()) {
                 stringBuilder.append(scanner.next());
             }
@@ -85,5 +91,15 @@ public class JsonWriterRepository implements WriterRepository {
         List<Writer> writers = getAllInternal();
         writers.removeIf(i -> i.getId() == id);
         saveWriterList(writers);
+    }
+
+    @Override
+    public void closeConnection() {
+        scanner.close();
+        try {
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

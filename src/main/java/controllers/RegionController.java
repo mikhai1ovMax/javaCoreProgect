@@ -29,4 +29,9 @@ public class RegionController implements GenericController<Region> {
     public void delete(int id) {
         service.deleteById(id);
     }
+
+    @Override
+    public void closeConnection() {
+        service.closeConnection();
+    }
 }

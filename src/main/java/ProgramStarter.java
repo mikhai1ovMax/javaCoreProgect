@@ -11,11 +11,15 @@ public class ProgramStarter {
         int action = scanner.nextInt();
         View.models();
         setView();
-        switch (action){
-            case 1-> view.printAll();
-            case 2-> view.save();
-            case 3-> view.Update();
-            case 4-> view.delete();
+        switch (action) {
+            case 1 -> view.printAll();
+            case 2 -> view.save();
+            case 3 -> view.Update();
+            case 4 -> view.delete();
+            case 5 -> {
+                view.exit();
+                System.exit(0);
+            }
         }
         restart();
     }

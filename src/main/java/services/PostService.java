@@ -29,4 +29,9 @@ public class PostService implements GenericService<Post>{
     public void deleteById(int id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public void closeConnection() {
+        repository.closeConnection();
+    }
 }

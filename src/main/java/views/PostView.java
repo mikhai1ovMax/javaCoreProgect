@@ -44,4 +44,11 @@ public class PostView implements GenericView<Post, Integer> {
         System.out.println("enter id");
         controller.delete(scanner.nextInt());
     }
+
+    @Override
+    public void exit() {
+        controller.closeConnection();
+    }
+
+
 }

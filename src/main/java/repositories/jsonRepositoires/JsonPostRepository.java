@@ -17,9 +17,11 @@ import java.util.stream.Collectors;
 
 public class JsonPostRepository implements PostRepository {
     private final String JSON_PATH = "src\\main\\resources\\files\\post.json";
-    private final Type postListType = new TypeToken<List<Post>>() {
-    }.getType();
+    private final Type postListType = new TypeToken<List<Post>>() {}.getType();
     private final Gson gson = new Gson();
+
+    private Scanner scanner;
+    private FileWriter fileWriter;
 
     @Override
     public Post save(Post post) {
@@ -47,7 +49,8 @@ public class JsonPostRepository implements PostRepository {
     }
 
     private void savePostList(List<Post> posts) {
-        try (FileWriter fileWriter = new FileWriter(JSON_PATH)) {
+        try {
+            fileWriter = new FileWriter(JSON_PATH);
             fileWriter.write(gson.toJson(posts));
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,7 +73,7 @@ public class JsonPostRepository implements PostRepository {
     private List<Post> getAllInternal() {
         StringBuilder stringBuilder = new StringBuilder();
         try {
-            Scanner scanner = new Scanner(new FileReader(JSON_PATH));
+            scanner = new Scanner(new FileReader(JSON_PATH));
             while (scanner.hasNext()) {
                 stringBuilder.append(scanner.next());
             }
@@ -86,5 +89,15 @@ public class JsonPostRepository implements PostRepository {
         List<Post> posts = getAllInternal();
         posts.removeIf(i -> i.getId() == id);
         savePostList(posts);
+    }
+
+    @Override
+    public void closeConnection() {
+        scanner.close();
+        try {
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

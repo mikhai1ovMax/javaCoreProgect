@@ -1,17 +1,13 @@
 package repositories.DBRepositories;
 
 import models.Post;
-import models.Region;
 import repositories.PostRepository;
 
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DBPostRepository implements PostRepository {
 
@@ -41,7 +37,6 @@ public class DBPostRepository implements PostRepository {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        closeAll();
         return object;
     }
 
@@ -60,7 +55,6 @@ public class DBPostRepository implements PostRepository {
                 throwables.printStackTrace();
             }
         });
-        closeAll();
         return posts;
     }
 
@@ -75,7 +69,6 @@ public class DBPostRepository implements PostRepository {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        closeAll();
         return object;
     }
 
@@ -90,7 +83,6 @@ public class DBPostRepository implements PostRepository {
             throwables.printStackTrace();
         }
         Post post = getNextPost(resultSet);
-        closeAll();
         return post;
     }
 
@@ -103,7 +95,6 @@ public class DBPostRepository implements PostRepository {
             while (resultSet.next()) {
                 posts.add(getNextPost(resultSet));
             }
-            closeAll();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -120,7 +111,6 @@ public class DBPostRepository implements PostRepository {
                 SQLException throwables) {
             throwables.printStackTrace();
         }
-        closeAll();
     }
 
     public List<Post> getPostsByWriterId(int id) {
@@ -132,7 +122,6 @@ public class DBPostRepository implements PostRepository {
                 if (resultSet.getInt("writer_id") == id)
                     posts.add(getNextPost(resultSet));
             }
-            closeAll();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -152,7 +141,8 @@ public class DBPostRepository implements PostRepository {
         return post;
     }
 
-    private void closeAll() {
+    @Override
+    public void closeConnection() {
         try {
             resultSet.close();
             preparedStatement.close();

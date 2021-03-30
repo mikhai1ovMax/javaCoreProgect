@@ -7,4 +7,5 @@ public interface GenericController<T> {
     public T save(T object);
     public T update(T object);
     public void delete(int id);
+    public void closeConnection();
 }
