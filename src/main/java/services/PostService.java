@@ -8,7 +8,15 @@ import java.util.List;
 
 public class PostService implements GenericService<Post>{
 
-    PostRepository repository = new DBPostRepository();
+    PostRepository repository;
+
+    public PostService() {
+        setRepository(new DBPostRepository());
+    }
+
+    public void setRepository(PostRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public List<Post> getAll() {

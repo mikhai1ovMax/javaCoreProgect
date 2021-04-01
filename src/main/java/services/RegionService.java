@@ -10,6 +10,14 @@ public class RegionService implements GenericService<Region>{
 
     RegionRepository repository = new DBRegionRepository();
 
+    public RegionService() {
+        setRepository(new DBRegionRepository());
+    }
+
+    public void setRepository(RegionRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
     public List<Region> getAll() {
         return repository.getAll();

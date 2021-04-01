@@ -10,6 +10,14 @@ public class WriterService implements GenericService<Writer>{
 
     WriterRepository repository = new DBWriterRepository();
 
+    public WriterService() {
+        setRepository(new DBWriterRepository());
+    }
+
+    public void setRepository(WriterRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
     public List<Writer> getAll() {
         return repository.getAll();
