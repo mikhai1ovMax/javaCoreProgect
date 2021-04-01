@@ -46,10 +46,4 @@ public class RegionView implements GenericView<Region, Integer> {
         System.out.println("enter id");
         controller.delete(scanner.nextInt());
     }
-
-    @Override
-    public void exit() {
-        controller.closeConnection();
-    }
-
 }

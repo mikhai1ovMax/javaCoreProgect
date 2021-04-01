@@ -21,7 +21,7 @@ public class WriterView implements GenericView<Writer, Integer> {
     public void printAll() {
         List writers = controller.getAll();
         if(writers != null)
-            controller.getAll().forEach(x -> System.out.println(x.toString()));
+            writers.forEach(x -> System.out.println(x.toString()));
         else
             System.out.println("no saved data");
     }
@@ -45,12 +45,6 @@ public class WriterView implements GenericView<Writer, Integer> {
         System.out.println("enter id");
         controller.delete(scanner.nextInt());
     }
-
-    @Override
-    public void exit() {
-        controller.closeConnection();
-    }
-
 
     private Writer getWriterWithoutId() {
         PostRepository postsRepo = new JsonPostRepository();

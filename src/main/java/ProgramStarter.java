@@ -16,10 +16,8 @@ public class ProgramStarter {
             case 2 -> view.save();
             case 3 -> view.Update();
             case 4 -> view.delete();
-            case 5 -> {
-                view.exit();
-                System.exit(0);
-            }
+            case 5 -> System.exit(0);
+
         }
         restart();
     }

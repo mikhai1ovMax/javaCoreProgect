@@ -45,10 +45,7 @@ public class PostView implements GenericView<Post, Integer> {
         controller.delete(scanner.nextInt());
     }
 
-    @Override
-    public void exit() {
-        controller.closeConnection();
-    }
+
 
 
 }

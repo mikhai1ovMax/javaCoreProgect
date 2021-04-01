@@ -38,8 +38,5 @@ public class RegionService implements GenericService<Region>{
         repository.deleteById(id);
     }
 
-    @Override
-    public void closeConnection() {
-        repository.closeConnection();
-    }
+
 }

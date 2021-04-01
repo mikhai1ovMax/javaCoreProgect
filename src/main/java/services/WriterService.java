@@ -20,26 +20,30 @@ public class WriterService implements GenericService<Writer>{
 
     @Override
     public List<Writer> getAll() {
-        return repository.getAll();
+        List writer = repository.getAll();
+        repository.closeConnection();
+        return writer;
     }
 
     @Override
     public Writer save(Writer object) {
-        return repository.save(object);
+        Writer writer = repository.save(object);
+        repository.closeConnection();
+        return writer;
     }
 
     @Override
     public Writer update(Writer object) {
-        return repository.update(object);
+        Writer writer = repository.update(object);
+        repository.closeConnection();
+        return writer;
     }
 
     @Override
     public void deleteById(int id) {
         repository.deleteById(id);
-    }
-
-    @Override
-    public void closeConnection() {
         repository.closeConnection();
     }
+
+
 }
