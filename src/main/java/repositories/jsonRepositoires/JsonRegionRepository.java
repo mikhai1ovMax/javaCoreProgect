@@ -2,14 +2,11 @@ package repositories.jsonRepositoires;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import models.Post;
 import models.Region;
 import repositories.RegionRepository;
 
-import javax.print.DocFlavor;
 import java.io.*;
 import java.lang.reflect.Type;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -89,13 +86,4 @@ public class JsonRegionRepository implements RegionRepository {
         saveRegionList(regions);
     }
 
-    @Override
-    public void closeConnection() {
-        scanner.close();
-        try {
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

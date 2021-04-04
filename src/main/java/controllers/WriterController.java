@@ -1,14 +1,14 @@
 package controllers;
 
 import models.Writer;
-import repositories.jsonRepositoires.JsonWriterRepository;
 import services.WriterService;
+import services.WriterServiceInterlayer;
 
 import java.util.List;
 
-public class WriterController implements GenericController<Writer> {
+public class WriterController implements WriterControllerInterlayer {
 
-    WriterService service = new WriterService();
+    WriterServiceInterlayer service = new WriterService();
 
     @Override
     public List<Writer> getAll() {

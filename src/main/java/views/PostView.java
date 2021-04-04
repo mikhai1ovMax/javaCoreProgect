@@ -1,13 +1,14 @@
 package views;
 
 import controllers.PostController;
+import controllers.PostControllerInterlayer;
 import models.Post;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class PostView implements GenericView<Post, Integer> {
-    PostController controller = new PostController();
+    PostControllerInterlayer controller = new PostController();
     Scanner scanner = new Scanner(System.in);
     Post post;
 

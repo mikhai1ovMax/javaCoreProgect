@@ -11,24 +11,16 @@ import java.util.List;
 
 public class DBPostRepository implements PostRepository {
 
-    private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     private final String getAllQuery = "select * from post";
 
-    public DBPostRepository() {
-        try {
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public Post save(Post object) {
         try {
-            preparedStatement = connection.prepareStatement("insert into region values (?,?,?,?)");
+            preparedStatement = DBConnector.getStatement("insert into region values (?,?,?,?)");
             preparedStatement.setInt(1, 0);
             preparedStatement.setString(2, object.getContent());
             preparedStatement.setString(3, object.getCreated().format(formatter));
@@ -41,11 +33,9 @@ public class DBPostRepository implements PostRepository {
     }
 
     public List<Post> saveWriterIds(List<Post> posts, int writerId) {
-        try {
-            preparedStatement = connection.prepareStatement("update post set writer_id = ? where id = ?");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+
+        preparedStatement = DBConnector.getStatement("update post set writer_id = ? where id = ?");
+
         posts.forEach(x -> {
             try {
                 preparedStatement.setInt(1, writerId);
@@ -61,7 +51,7 @@ public class DBPostRepository implements PostRepository {
     @Override
     public Post update(Post object) {
         try {
-            preparedStatement = connection.prepareStatement("update post set content = ?, updated = ? where id = ?");
+            preparedStatement = DBConnector.getStatement("update post set content = ?, updated = ? where id = ?");
             preparedStatement.setString(1, object.getContent());
             preparedStatement.setString(2, LocalDateTime.now().format(formatter));
             preparedStatement.setInt(3, object.getId());
@@ -75,7 +65,7 @@ public class DBPostRepository implements PostRepository {
     @Override
     public Post getById(Integer id) {
         try {
-            preparedStatement = connection.prepareStatement(getAllQuery + " where id = ?");
+            preparedStatement = DBConnector.getStatement(getAllQuery + " where id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -90,7 +80,7 @@ public class DBPostRepository implements PostRepository {
     public List<Post> getAll() {
         List<Post> posts = new ArrayList<>();
         try {
-            preparedStatement = connection.prepareStatement(getAllQuery);
+            preparedStatement = DBConnector.getStatement(getAllQuery);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 posts.add(getNextPost(resultSet));
@@ -104,7 +94,7 @@ public class DBPostRepository implements PostRepository {
     @Override
     public void deleteById(Integer id) {
         try {
-            preparedStatement = connection.prepareStatement("delete from post where id = ?");
+            preparedStatement = DBConnector.getStatement("delete from post where id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (
@@ -116,7 +106,7 @@ public class DBPostRepository implements PostRepository {
     public List<Post> getPostsByWriterId(int id) {
         List<Post> posts = new ArrayList<>();
         try {
-            preparedStatement = connection.prepareStatement(getAllQuery);
+            preparedStatement = DBConnector.getStatement(getAllQuery);
             resultSet = preparedStatement.executeQuery(getAllQuery);
             while (resultSet.next()) {
                 if (resultSet.getInt("writer_id") == id)
@@ -141,14 +131,4 @@ public class DBPostRepository implements PostRepository {
         return post;
     }
 
-    @Override
-    public void closeConnection() {
-        try {
-            resultSet.close();
-            preparedStatement.close();
-            connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
 }

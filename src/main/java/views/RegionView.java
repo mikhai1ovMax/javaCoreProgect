@@ -1,6 +1,7 @@
 package views;
 
 import controllers.RegionController;
+import controllers.RegionControllerInterlayer;
 import models.Region;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Objects;
 import java.util.Scanner;
 
 public class RegionView implements GenericView<Region, Integer> {
-    RegionController controller = new RegionController();
+    RegionControllerInterlayer controller = new RegionController();
     Scanner scanner = new Scanner(System.in);
     Region region;
 

@@ -6,7 +6,7 @@ import repositories.RegionRepository;
 
 import java.util.List;
 
-public class RegionService implements GenericService<Region>{
+public class RegionService implements RegionServiceInterlayer{
 
     RegionRepository repository = new DBRegionRepository();
 

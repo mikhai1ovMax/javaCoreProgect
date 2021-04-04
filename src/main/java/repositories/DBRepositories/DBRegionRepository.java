@@ -9,23 +9,16 @@ import java.util.List;
 
 public class DBRegionRepository implements RegionRepository {
 
-    private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
     private final String getAllQuery = "select * from region";
 
-    public DBRegionRepository() {
-        try {
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
     @Override
     public Region save(Region object) {
         try {
-            preparedStatement = connection.prepareStatement("insert into region values (?,?)");
+            preparedStatement = DBConnector.getStatement("insert into region values (?,?)");
             preparedStatement.setInt(1, 0);
             preparedStatement.setString(2, object.getName());
             preparedStatement.execute();
@@ -38,7 +31,7 @@ public class DBRegionRepository implements RegionRepository {
     @Override
     public Region update(Region object) {
         try {
-            preparedStatement = connection.prepareStatement("update region set name = ? where id = ?");
+            preparedStatement = DBConnector.getStatement("update region set name = ? where id = ?");
             preparedStatement.setString(1, object.getName());
             preparedStatement.setInt(2, object.getId());
             preparedStatement.execute();
@@ -51,7 +44,7 @@ public class DBRegionRepository implements RegionRepository {
     @Override
     public Region getById(Integer id) {
         try {
-            preparedStatement = connection.prepareStatement(getAllQuery + " where id = ?");
+            preparedStatement = DBConnector.getStatement(getAllQuery + " where id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -67,7 +60,7 @@ public class DBRegionRepository implements RegionRepository {
     public List<Region> getAll() {
         List<Region> regions = new ArrayList<>();
         try {
-            preparedStatement = connection.prepareStatement(getAllQuery);
+            preparedStatement = DBConnector.getStatement(getAllQuery);
             resultSet = preparedStatement.executeQuery(getAllQuery);
             while (resultSet.next()) {
                 regions.add(getNextRegion(resultSet));
@@ -81,7 +74,7 @@ public class DBRegionRepository implements RegionRepository {
     @Override
     public void deleteById(Integer id) {
         try {
-            preparedStatement = connection.prepareStatement("delete from region where id = ?");
+            preparedStatement = DBConnector.getStatement("delete from region where id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (
@@ -101,14 +94,4 @@ public class DBRegionRepository implements RegionRepository {
         return region;
     }
 
-    @Override
-    public void closeConnection() {
-        try {
-            resultSet.close();
-            preparedStatement.close();
-            connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
 }

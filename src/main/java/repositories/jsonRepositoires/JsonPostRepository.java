@@ -3,7 +3,6 @@ package repositories.jsonRepositoires;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import models.Post;
-import models.Region;
 import repositories.PostRepository;
 
 import java.io.FileNotFoundException;
@@ -13,7 +12,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class JsonPostRepository implements PostRepository {
     private final String JSON_PATH = "src\\main\\resources\\files\\post.json";
@@ -89,15 +87,5 @@ public class JsonPostRepository implements PostRepository {
         List<Post> posts = getAllInternal();
         posts.removeIf(i -> i.getId() == id);
         savePostList(posts);
-    }
-
-    @Override
-    public void closeConnection() {
-        scanner.close();
-        try {
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

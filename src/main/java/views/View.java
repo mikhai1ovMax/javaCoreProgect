@@ -1,9 +1,5 @@
 package views;
 
-import repositories.GenericRepository;
-
-import java.util.List;
-
 public class View {
     private View() {
     }

@@ -1,14 +1,14 @@
 package controllers;
 
 import models.Region;
-import repositories.jsonRepositoires.JsonRegionRepository;
 import services.RegionService;
+import services.RegionServiceInterlayer;
 
 import java.util.List;
 
-public class RegionController implements GenericController<Region> {
+public class RegionController implements RegionControllerInterlayer {
 
-    RegionService service = new RegionService();
+    RegionServiceInterlayer service = new RegionService();
 
     @Override
     public List<Region> getAll() {

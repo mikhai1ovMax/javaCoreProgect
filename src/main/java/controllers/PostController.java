@@ -1,15 +1,13 @@
 package controllers;
 
 import models.Post;
-import repositories.PostRepository;
-import repositories.jsonRepositoires.JsonPostRepository;
-import services.GenericService;
 import services.PostService;
+import services.PostServiceInterlayer;
 
 import java.util.List;
 
-public class PostController implements GenericController<Post> {
-    PostService service = new PostService();
+public class PostController implements PostControllerInterlayer {
+    PostServiceInterlayer service = new PostService();
 
     @Override
     public List<Post> getAll() {

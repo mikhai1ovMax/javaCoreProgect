@@ -18,18 +18,12 @@ public class DBWriterRepository implements WriterRepository {
 
 
 
-    public DBWriterRepository() {
-        try {
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
 
     @Override
     public Writer save(Writer object) {
         try {
-            preparedStatement = connection.prepareStatement("insert into writer values (?,?,?,?)");
+            preparedStatement = DBConnector.getStatement("insert into writer values (?,?,?,?)");
             preparedStatement.setInt(1, 0);
             preparedStatement.setString(2, object.getFirstName());
             preparedStatement.setString(3, object.getLastName());
@@ -45,7 +39,7 @@ public class DBWriterRepository implements WriterRepository {
     @Override
     public Writer update(Writer object) {
         try {
-            preparedStatement = connection.prepareStatement("update writer set first_name = ?, last_name = ? where id = ?");
+            preparedStatement = DBConnector.getStatement("update writer set first_name = ?, last_name = ? where id = ?");
             preparedStatement.setString(1, object.getFirstName());
             preparedStatement.setString(2, object.getLastName());
             preparedStatement.setInt(3, object.getId());
@@ -58,7 +52,7 @@ public class DBWriterRepository implements WriterRepository {
     @Override
     public Writer getById(Integer id) {
         try {
-            preparedStatement = connection.prepareStatement(getAllQuery + " where id = ?");
+            preparedStatement = DBConnector.getStatement(getAllQuery + " where id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -73,7 +67,7 @@ public class DBWriterRepository implements WriterRepository {
     public List<Writer> getAll() {
         List<Writer> writers = new ArrayList<>();
         try {
-            preparedStatement = connection.prepareStatement(getAllQuery);
+            preparedStatement = DBConnector.getStatement(getAllQuery);
             resultSet = preparedStatement.executeQuery(getAllQuery);
             while (resultSet.next()) {
                 writers.add(getNextWriter(resultSet));
@@ -87,7 +81,7 @@ public class DBWriterRepository implements WriterRepository {
     @Override
     public void deleteById(Integer id) {
         try {
-            preparedStatement = connection.prepareStatement("delete from writer where id = ?");
+            preparedStatement = DBConnector.getStatement("delete from writer where id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (
@@ -111,16 +105,5 @@ public class DBWriterRepository implements WriterRepository {
         return writer;
     }
 
-    @Override
-    public void closeConnection() {
-        try {
-            dbPostRepository.closeConnection();
-            dbRegionRepository.closeConnection();
-            resultSet.close();
-            preparedStatement.close();
-            connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
+
 }

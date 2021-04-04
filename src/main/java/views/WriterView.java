@@ -1,6 +1,7 @@
 package views;
 
 import controllers.WriterController;
+import controllers.WriterControllerInterlayer;
 import models.Writer;
 import models.WriterFactory;
 import repositories.*;
@@ -13,7 +14,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class WriterView implements GenericView<Writer, Integer> {
-    WriterController controller = new WriterController();
+    WriterControllerInterlayer controller = new WriterController();
     Scanner scanner = new Scanner(System.in);
     Writer writer;
 

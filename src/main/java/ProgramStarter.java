@@ -1,3 +1,4 @@
+import repositories.DBRepositories.DBConnector;
 import views.*;
 
 import java.util.Scanner;
@@ -16,7 +17,10 @@ public class ProgramStarter {
             case 2 -> view.save();
             case 3 -> view.Update();
             case 4 -> view.delete();
-            case 5 -> System.exit(0);
+            case 5 -> {
+                DBConnector.closeConnection();
+                System.exit(0);
+            }
 
         }
         restart();

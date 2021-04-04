@@ -10,7 +10,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -91,15 +90,5 @@ public class JsonWriterRepository implements WriterRepository {
         List<Writer> writers = getAllInternal();
         writers.removeIf(i -> i.getId() == id);
         saveWriterList(writers);
-    }
-
-    @Override
-    public void closeConnection() {
-        scanner.close();
-        try {
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

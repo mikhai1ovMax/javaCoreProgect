@@ -6,7 +6,7 @@ import repositories.PostRepository;
 
 import java.util.List;
 
-public class PostService implements GenericService<Post>{
+public class PostService implements PostServiceInterlayer {
 
     PostRepository repository;
 

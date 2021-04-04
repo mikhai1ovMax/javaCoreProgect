@@ -6,7 +6,7 @@ import repositories.WriterRepository;
 
 import java.util.List;
 
-public class WriterService implements GenericService<Writer>{
+public class WriterService implements WriterServiceInterlayer{
 
     WriterRepository repository = new DBWriterRepository();
 
@@ -20,29 +20,22 @@ public class WriterService implements GenericService<Writer>{
 
     @Override
     public List<Writer> getAll() {
-        List writer = repository.getAll();
-        repository.closeConnection();
-        return writer;
+        return repository.getAll();
     }
 
     @Override
     public Writer save(Writer object) {
-        Writer writer = repository.save(object);
-        repository.closeConnection();
-        return writer;
+        return repository.save(object);
     }
 
     @Override
     public Writer update(Writer object) {
-        Writer writer = repository.update(object);
-        repository.closeConnection();
-        return writer;
+        return repository.update(object);
     }
 
     @Override
     public void deleteById(int id) {
         repository.deleteById(id);
-        repository.closeConnection();
     }
 
 
