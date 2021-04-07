@@ -1,0 +1,5 @@
+language: java
+jdk: oraclegdk15
+cache:
+  directories:
+    - $HOME/.m2
