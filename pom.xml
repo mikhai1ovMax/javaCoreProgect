@@ -10,6 +10,19 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>7.7.2</version>
+                <configuration>
+                    <user>postgres</user>
+                    <password>1</password>
+                    <url>jdbc:postgresql://localhost:5432/postgres</url>
+                    <schemas>
+                        <schema>jcp</schema>
+                    </schemas>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
@@ -31,7 +44,6 @@
             <version>1.18.18</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -54,7 +66,14 @@
             <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.19</version>
+        </dependency>
+
     </dependencies>
+
 
     <properties>
         <maven.compiler.source>15</maven.compiler.source>
