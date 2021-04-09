@@ -810,7 +810,7 @@ false Zulu
       <ObjectId>13442</ObjectId>
       <Comment>default administrative connection database</Comment>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>1393</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1397</IntrospectionStateNumber>
       <Current>1</Current>
       <Relations>sequence|table|34181|34183|1
 sequence|table|34194|34196|1
@@ -894,7 +894,7 @@ UC/10
 </Acl>
       <StateNumber>287</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>1394</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1398</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <schema id="24" parent="7" name="test">

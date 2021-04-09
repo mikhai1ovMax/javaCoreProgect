@@ -1,4 +1,4 @@
-import repositories.DBRepositories.DBConnector;
+import repositories.JDBCRepositories.JDBCConnector;
 import views.*;
 
 import java.util.Scanner;
@@ -18,7 +18,7 @@ public class ProgramStarter {
             case 3 -> view.Update();
             case 4 -> view.delete();
             case 5 -> {
-                DBConnector.closeConnection();
+                JDBCConnector.closeConnection();
                 System.exit(0);
             }
 

@@ -1,4 +1,4 @@
-package repositories.DBRepositories;
+package repositories.JDBCRepositories;
 
 import models.Writer;
 import repositories.WriterRepository;
@@ -7,13 +7,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DBWriterRepository implements WriterRepository {
+public class JDBCWriterRepository implements WriterRepository {
 
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
-    private DBPostRepository dbPostRepository = new DBPostRepository();
-    private DBRegionRepository dbRegionRepository = new DBRegionRepository();
+    private JDBCPostRepository JDBCPostRepository = new JDBCPostRepository();
+    private JDBCRegionRepository JDBCRegionRepository = new JDBCRegionRepository();
     private final String getAllQuery = "select * from writer";
 
 
@@ -23,13 +23,13 @@ public class DBWriterRepository implements WriterRepository {
     @Override
     public Writer save(Writer object) {
         try {
-            preparedStatement = DBConnector.getStatement("insert into writer values (?,?,?,?)");
+            preparedStatement = JDBCConnector.getStatement("insert into writer values (?,?,?,?)");
             preparedStatement.setInt(1, 0);
             preparedStatement.setString(2, object.getFirstName());
             preparedStatement.setString(3, object.getLastName());
             preparedStatement.setInt(4, object.getRegion().getId());
             preparedStatement.execute();
-            dbPostRepository.saveWriterIds(object.getPosts(), object.getId());
+            JDBCPostRepository.saveWriterIds(object.getPosts(), object.getId());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -39,7 +39,7 @@ public class DBWriterRepository implements WriterRepository {
     @Override
     public Writer update(Writer object) {
         try {
-            preparedStatement = DBConnector.getStatement("update writer set first_name = ?, last_name = ? where id = ?");
+            preparedStatement = JDBCConnector.getStatement("update writer set first_name = ?, last_name = ? where id = ?");
             preparedStatement.setString(1, object.getFirstName());
             preparedStatement.setString(2, object.getLastName());
             preparedStatement.setInt(3, object.getId());
@@ -52,7 +52,7 @@ public class DBWriterRepository implements WriterRepository {
     @Override
     public Writer getById(Integer id) {
         try {
-            preparedStatement = DBConnector.getStatement(getAllQuery + " where id = ?");
+            preparedStatement = JDBCConnector.getStatement(getAllQuery + " where id = ?");
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -67,7 +67,7 @@ public class DBWriterRepository implements WriterRepository {
     public List<Writer> getAll() {
         List<Writer> writers = new ArrayList<>();
         try {
-            preparedStatement = DBConnector.getStatement(getAllQuery);
+            preparedStatement = JDBCConnector.getStatement(getAllQuery);
             resultSet = preparedStatement.executeQuery(getAllQuery);
             while (resultSet.next()) {
                 writers.add(getNextWriter(resultSet));
@@ -81,7 +81,7 @@ public class DBWriterRepository implements WriterRepository {
     @Override
     public void deleteById(Integer id) {
         try {
-            preparedStatement = DBConnector.getStatement("delete from writer where id = ?");
+            preparedStatement = JDBCConnector.getStatement("delete from writer where id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (
@@ -97,8 +97,8 @@ public class DBWriterRepository implements WriterRepository {
             writer.setId(resultSet.getInt("id"));
             writer.setFirstName(resultSet.getString("first_name"));
             writer.setLastName(resultSet.getString("last_name"));
-            writer.setRegion(dbRegionRepository.getById(resultSet.getInt("region_id")));
-            writer.setPosts(dbPostRepository.getPostsByWriterId(writer.getId()));
+            writer.setRegion(JDBCRegionRepository.getById(resultSet.getInt("region_id")));
+            writer.setPosts(JDBCPostRepository.getPostsByWriterId(writer.getId()));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

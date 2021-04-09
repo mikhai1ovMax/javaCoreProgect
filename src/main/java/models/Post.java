@@ -1,15 +1,25 @@
 package models;
 
 import lombok.Data;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Data
+@Entity
+@Table(name = "post")
 public class Post {
+    @Id
+    @GeneratedValue
     private int id;
     private String content;
     private LocalDateTime created;
     private LocalDateTime updated;
+
+    @ManyToOne
+    @JoinColumn(name = "writer_id")
+    private Writer writer;
 
     public Post(int id, String content, LocalDateTime created) {
         this.id = id;

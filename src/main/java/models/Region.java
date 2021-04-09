@@ -2,12 +2,21 @@ package models;
 
 import lombok.Data;
 
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Data
+@Entity
+@Table(name = "region")
 public class Region {
+    @Id
+    @GeneratedValue
     private int id;
     private String name;
+
+    @OneToMany(mappedBy = "writer")
+    private List<Writer> writers;
 
     public Region(int id, String name) {
         this.id = id;

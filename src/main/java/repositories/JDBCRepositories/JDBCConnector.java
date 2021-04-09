@@ -1,18 +1,18 @@
-package repositories.DBRepositories;
+package repositories.JDBCRepositories;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class DBConnector {
+public class JDBCConnector {
     private static final String URL = "jdbc:mysql://localhost:3306/javaCoreProgect_DB";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "1";
     private static Connection connection;
     private static PreparedStatement statement;
 
-    private DBConnector(){}
+    private JDBCConnector(){}
 
     public static PreparedStatement getStatement(String sql){
         if(connection == null){

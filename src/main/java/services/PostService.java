@@ -1,7 +1,7 @@
 package services;
 
 import models.Post;
-import repositories.DBRepositories.DBPostRepository;
+import repositories.JDBCRepositories.JDBCPostRepository;
 import repositories.PostRepository;
 
 import java.util.List;
@@ -11,7 +11,7 @@ public class PostService implements PostServiceInterlayer {
     PostRepository repository;
 
     public PostService() {
-        setRepository(new DBPostRepository());
+        setRepository(new JDBCPostRepository());
     }
 
     public void setRepository(PostRepository repository) {

@@ -1,17 +1,17 @@
 package services;
 
 import models.Writer;
-import repositories.DBRepositories.DBWriterRepository;
+import repositories.JDBCRepositories.JDBCWriterRepository;
 import repositories.WriterRepository;
 
 import java.util.List;
 
 public class WriterService implements WriterServiceInterlayer{
 
-    WriterRepository repository = new DBWriterRepository();
+    WriterRepository repository = new JDBCWriterRepository();
 
     public WriterService() {
-        setRepository(new DBWriterRepository());
+        setRepository(new JDBCWriterRepository());
     }
 
     public void setRepository(WriterRepository repository) {

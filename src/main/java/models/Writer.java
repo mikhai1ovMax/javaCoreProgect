@@ -2,15 +2,25 @@ package models;
 
 import lombok.Data;
 
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
 @Data
+@Entity
+@Table(name = "writer")
 public class Writer {
+    @Id
+    @GeneratedValue
     private int id;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @OneToMany(mappedBy = "post")
     private List<Post> posts;
+    @ManyToOne()
+    @JoinColumn(name = "region_id")
     private Region region;
 
     public Writer(int id, String firstName, String lastName, List<Post> posts, Region region) {
