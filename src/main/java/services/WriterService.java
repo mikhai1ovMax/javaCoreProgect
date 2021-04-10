@@ -3,6 +3,7 @@ package services;
 import models.Writer;
 import repositories.JDBCRepositories.JDBCWriterRepository;
 import repositories.WriterRepository;
+import repositories.hibernateRepositories.HibernateWriterRepository;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class WriterService implements WriterServiceInterlayer{
     WriterRepository repository = new JDBCWriterRepository();
 
     public WriterService() {
-        setRepository(new JDBCWriterRepository());
+        setRepository(new HibernateWriterRepository());
     }
 
     public void setRepository(WriterRepository repository) {

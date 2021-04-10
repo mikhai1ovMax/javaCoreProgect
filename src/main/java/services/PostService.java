@@ -1,8 +1,8 @@
 package services;
 
 import models.Post;
-import repositories.JDBCRepositories.JDBCPostRepository;
 import repositories.PostRepository;
+import repositories.hibernateRepositories.HibernatePostRepository;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ public class PostService implements PostServiceInterlayer {
     PostRepository repository;
 
     public PostService() {
-        setRepository(new JDBCPostRepository());
+        setRepository(new HibernatePostRepository());
     }
 
     public void setRepository(PostRepository repository) {

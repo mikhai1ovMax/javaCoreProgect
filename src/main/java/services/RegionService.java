@@ -3,6 +3,7 @@ package services;
 import models.Region;
 import repositories.JDBCRepositories.JDBCRegionRepository;
 import repositories.RegionRepository;
+import repositories.hibernateRepositories.HibernateRegionRepository;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class RegionService implements RegionServiceInterlayer{
     RegionRepository repository = new JDBCRegionRepository();
 
     public RegionService() {
-        setRepository(new JDBCRegionRepository());
+        setRepository(new HibernateRegionRepository());
     }
 
     public void setRepository(RegionRepository repository) {

@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Data
 @Entity
-@Table(name = "post")
+@Table(name = "post", schema = "public")
 public class Post {
     @Id
     @GeneratedValue
