@@ -18,7 +18,7 @@
                     <password>1</password>
                     <url>jdbc:postgresql://localhost:5432/postgres</url>
                     <schemas>
-                        <schema>jcp</schema>
+                        <schema>public</schema>
                     </schemas>
                 </configuration>
             </plugin>

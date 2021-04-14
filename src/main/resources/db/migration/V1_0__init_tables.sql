@@ -1,9 +1,9 @@
-create table if not exists public.Region(
+create table if not exists region(
     id serial not null primary key,
     region varchar(45)
 );
 
-create table if not exists public.Writer(
+create table if not exists writer(
     id serial not null primary key,
     first_name varchar(45),
     last_name varchar(45),
@@ -13,7 +13,7 @@ create table if not exists public.Writer(
             references Region(id)
 );
 
-create table if not exists public.Post(
+create table if not exists post(
     id serial not null primary key,
     content text not null,
     created timestamptz not null,

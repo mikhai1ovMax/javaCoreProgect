@@ -4,7 +4,9 @@ import models.Region;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 import repositories.RegionRepository;
 
 import java.util.List;
@@ -12,13 +14,20 @@ import java.util.List;
 public class HibernateRegionRepository implements RegionRepository {
     private static SessionFactory sessionFactory;
 
+
+
     public HibernateRegionRepository() {
-        sessionFactory = new Configuration().buildSessionFactory();
+        sessionFactory = SessionFactoryBuilder.getSessionFactory();
+
     }
 
     @Override
     public Region save(Region object) {
-        return null;
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(object);
+        session.getTransaction().commit();
+        return object;
     }
 
     @Override
@@ -34,10 +43,9 @@ public class HibernateRegionRepository implements RegionRepository {
     @Override
     public List<Region> getAll() {
         Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        List regions = session.createQuery("FROM Region").list();
-        transaction.commit();
-        session.close();
+        session.beginTransaction();
+        List regions = session.createQuery("from Region").list();
+        session.getTransaction().commit();
         return regions;
     }
 

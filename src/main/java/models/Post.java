@@ -1,6 +1,8 @@
 package models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -9,6 +11,8 @@ import java.util.Objects;
 @Data
 @Entity
 @Table(name = "post", schema = "public")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Post {
     @Id
     @GeneratedValue
@@ -18,7 +22,7 @@ public class Post {
     private LocalDateTime updated;
 
     @ManyToOne
-    @JoinColumn(name = "writer_id")
+    @JoinColumn(name = "id")
     private Writer writer;
 
     public Post(int id, String content, LocalDateTime created) {
@@ -30,8 +34,6 @@ public class Post {
         this.content = content;
     }
 
-    public Post() {
-    }
 
     @Override
     public boolean equals(Object o) {

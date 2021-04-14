@@ -9,7 +9,7 @@ import java.util.List;
 
 public class WriterService implements WriterServiceInterlayer{
 
-    WriterRepository repository = new JDBCWriterRepository();
+    WriterRepository repository;
 
     public WriterService() {
         setRepository(new HibernateWriterRepository());

@@ -1,6 +1,8 @@
 package models;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.Objects;
 @Data
 @Entity
 @Table(name = "writer", schema = "public")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Writer {
     @Id
     @GeneratedValue
@@ -20,16 +24,8 @@ public class Writer {
     @OneToMany(mappedBy = "post")
     private List<Post> posts;
     @ManyToOne()
-    @JoinColumn(name = "region_id")
+    @JoinColumn(name = "id")
     private Region region;
-
-    public Writer(int id, String firstName, String lastName, List<Post> posts, Region region) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.posts = posts;
-        this.region = region;
-    }
 
     public Writer(String firstName, String lastName, List<Post> posts, Region region) {
         this.firstName = firstName;
@@ -37,8 +33,6 @@ public class Writer {
         this.posts = posts;
         this.region = region;
     }
-
-    public Writer(){}
 
     @Override
     public boolean equals(Object o) {
