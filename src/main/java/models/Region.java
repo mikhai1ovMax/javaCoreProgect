@@ -16,10 +16,12 @@ import java.util.Objects;
 public class Region {
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private int id;
+    @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "writer")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "region", targetEntity = Writer.class)
     private List<Writer> writers;
 
     public Region(int id, String name) {

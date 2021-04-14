@@ -16,6 +16,7 @@ import java.util.Objects;
 public class Writer {
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private int id;
     @Column(name = "first_name")
     private String firstName;
@@ -23,7 +24,7 @@ public class Writer {
     private String lastName;
     @OneToMany(mappedBy = "post")
     private List<Post> posts;
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "id")
     private Region region;
 

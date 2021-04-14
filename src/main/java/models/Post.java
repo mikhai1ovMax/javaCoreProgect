@@ -16,13 +16,17 @@ import java.util.Objects;
 public class Post {
     @Id
     @GeneratedValue
+    @Column(name = "id")
     private int id;
+    @Column(name = "content")
     private String content;
+    @Column(name = "created")
     private LocalDateTime created;
+    @Column(name = "updated")
     private LocalDateTime updated;
 
-    @ManyToOne
-    @JoinColumn(name = "id")
+    @ManyToOne(targetEntity = Writer.class)
+    @JoinColumn(name = "writers")
     private Writer writer;
 
     public Post(int id, String content, LocalDateTime created) {
