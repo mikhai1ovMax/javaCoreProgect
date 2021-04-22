@@ -1,9 +1,7 @@
 package services;
 
 import models.Region;
-import repositories.JDBCRepositories.JDBCRegionRepository;
 import repositories.RegionRepository;
-import repositories.hibernateRepositories.HibernatePostRepository;
 import repositories.hibernateRepositories.HibernateRegionRepository;
 
 import java.util.List;

@@ -15,17 +15,16 @@ import java.util.Objects;
 @AllArgsConstructor
 public class Writer {
     @Id
-    @GeneratedValue
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "writer", fetch = FetchType.LAZY)
     private List<Post> posts;
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "region_id")
     private Region region;
 
     public Writer(String firstName, String lastName, List<Post> posts, Region region) {

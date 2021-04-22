@@ -784,7 +784,7 @@ false YEKT
 false Z
 false Zulu
 </TimeZones>
-      <StartupTime>1617821956</StartupTime>
+      <StartupTime>1618945802</StartupTime>
     </root>
     <database id="2" parent="1" name="ekz">
       <ObjectId>24601</ObjectId>
@@ -810,8 +810,12 @@ false Zulu
       <ObjectId>13442</ObjectId>
       <Comment>default administrative connection database</Comment>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>1558</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1579</IntrospectionStateNumber>
       <Current>1</Current>
+      <Relations>sequence|table|42289|42291|1
+sequence|table|42297|42299|1
+sequence|table|42305|42307|1
+</Relations>
     </database>
     <database id="8" parent="1" name="sprhib">
       <ObjectId>24576</ObjectId>
@@ -890,7 +894,7 @@ UC/10
 </Acl>
       <StateNumber>287</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>1559</IntrospectionStateNumber>
+      <IntrospectionStateNumber>1579</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <schema id="24" parent="7" name="test">
@@ -1003,5 +1007,181 @@ UC/10
       <HandlerId>335</HandlerId>
       <Type>index</Type>
     </access-method>
+    <sequence id="38" parent="23" name="post_id_seq">
+      <ObjectId>42289</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1562</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="39" parent="23" name="region_id_seq">
+      <ObjectId>42297</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1563</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <sequence id="40" parent="23" name="writer_id_seq">
+      <ObjectId>42305</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1564</StateNumber>
+      <DataType>integer|0s</DataType>
+    </sequence>
+    <table id="41" parent="23" name="post">
+      <ObjectId>42291</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1565</StateNumber>
+    </table>
+    <table id="42" parent="23" name="region">
+      <ObjectId>42299</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1566</StateNumber>
+    </table>
+    <table id="43" parent="23" name="writer">
+      <ObjectId>42307</ObjectId>
+      <Owner>postgres</Owner>
+      <StateNumber>1565</StateNumber>
+    </table>
+    <column id="44" parent="41" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1562</StateNumber>
+      <DefaultExpression>nextval(&apos;post_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="45" parent="41" name="content">
+      <Position>2</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <StateNumber>1562</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="46" parent="41" name="created">
+      <Position>3</Position>
+      <DataType>timestamp|0s</DataType>
+      <StateNumber>1562</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="47" parent="41" name="updated">
+      <Position>4</Position>
+      <DataType>timestamp|0s</DataType>
+      <StateNumber>1562</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="48" parent="41" name="writer_id">
+      <Position>5</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>1562</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="49" parent="41" name="post_pkey">
+      <ObjectId>42295</ObjectId>
+      <StateNumber>1562</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationIds>0</CollationIds>
+      <ClassIds>1978</ClassIds>
+    </index>
+    <key id="50" parent="41" name="post_pkey">
+      <ObjectId>42296</ObjectId>
+      <StateNumber>1562</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>post_pkey</UnderlyingIndexName>
+    </key>
+    <foreign-key id="51" parent="41" name="fkgdi0l98yjuebvvh08eu6cao7m">
+      <ObjectId>42316</ObjectId>
+      <StateNumber>1565</StateNumber>
+      <ColNames>writer_id</ColNames>
+      <RefTableId>42307</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>writer</RefTableName>
+      <RefKeyName>writer_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="52" parent="42" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1563</StateNumber>
+      <DefaultExpression>nextval(&apos;region_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="53" parent="42" name="name">
+      <Position>2</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <StateNumber>1563</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <index id="54" parent="42" name="region_pkey">
+      <ObjectId>42303</ObjectId>
+      <StateNumber>1563</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationIds>0</CollationIds>
+      <ClassIds>1978</ClassIds>
+    </index>
+    <key id="55" parent="42" name="region_pkey">
+      <ObjectId>42304</ObjectId>
+      <StateNumber>1563</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>region_pkey</UnderlyingIndexName>
+    </key>
+    <column id="56" parent="43" name="id">
+      <Position>1</Position>
+      <DataType>integer|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>1564</StateNumber>
+      <DefaultExpression>nextval(&apos;writer_id_seq&apos;::regclass)</DefaultExpression>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="57" parent="43" name="first_name">
+      <Position>2</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <StateNumber>1564</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="58" parent="43" name="last_name">
+      <Position>3</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <StateNumber>1564</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="59" parent="43" name="region_id">
+      <Position>4</Position>
+      <DataType>integer|0s</DataType>
+      <StateNumber>1564</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <index id="60" parent="43" name="writer_pkey">
+      <ObjectId>42314</ObjectId>
+      <StateNumber>1564</StateNumber>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+      <Primary>1</Primary>
+      <AccessMethodId>403</AccessMethodId>
+      <CollationIds>0</CollationIds>
+      <ClassIds>1978</ClassIds>
+    </index>
+    <key id="61" parent="43" name="writer_pkey">
+      <ObjectId>42315</ObjectId>
+      <StateNumber>1564</StateNumber>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>writer_pkey</UnderlyingIndexName>
+    </key>
+    <foreign-key id="62" parent="43" name="fkq2a7wy9d6915lugfxyhe2otmo">
+      <ObjectId>42321</ObjectId>
+      <StateNumber>1566</StateNumber>
+      <ColNames>region_id</ColNames>
+      <RefTableId>42299</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>region</RefTableName>
+      <RefKeyName>region_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
   </database-model>
 </dataSource>

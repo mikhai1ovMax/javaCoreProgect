@@ -15,10 +15,10 @@ public class RegionView implements GenericView<Region, Integer> {
 
     @Override
     public void printAll() {
-        List regions = controller.getAll();
-        if(Objects.isNull(regions))
-            controller.getAll().forEach(x -> System.out.println(x.toString()));
-        else
+        List<Region> regions = controller.getAll();
+        if (Objects.nonNull(regions) && !regions.isEmpty()) {
+            controller.getAll().forEach(region -> System.out.println(region));
+        } else
             System.out.println("no saved data");
     }
 

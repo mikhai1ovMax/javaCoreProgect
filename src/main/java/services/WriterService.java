@@ -1,7 +1,6 @@
 package services;
 
 import models.Writer;
-import repositories.JDBCRepositories.JDBCWriterRepository;
 import repositories.WriterRepository;
 import repositories.hibernateRepositories.HibernateWriterRepository;
 

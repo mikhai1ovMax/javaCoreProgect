@@ -1,7 +1,7 @@
-import repositories.JDBCRepositories.JDBCConnector;
 import views.*;
 
 import java.util.Scanner;
+import repositories.hibernateRepositories.SessionBuilder;
 
 public class ProgramStarter {
     GenericView view;
@@ -12,25 +12,42 @@ public class ProgramStarter {
         int action = scanner.nextInt();
         View.models();
         setView();
+        SessionBuilder.openSession();
         switch (action) {
-            case 1 -> view.printAll();
-            case 2 -> view.save();
-            case 3 -> view.Update();
-            case 4 -> view.delete();
-            case 5 -> {
-                JDBCConnector.closeConnection();
+            case 1:
+                view.printAll();
+                break;
+            case 2:
+                System.out.println(view.save());
+                break;
+            case 3:
+                System.out.println(view.Update());
+                break;
+            case 4:
+                view.delete();
+                break;
+            case 5:
+                SessionBuilder.closeSession();
                 System.exit(0);
-            }
+                break;
+
 
         }
+        SessionBuilder.closeSession();
         restart();
     }
 
     public void setView() {
         switch (scanner.nextInt()) {
-            case 1 -> view = new WriterView();
-            case 2 -> view = new PostView();
-            case 3 -> view = new RegionView();
+            case 1:
+                view = new WriterView();
+                break;
+            case 2:
+                view = new PostView();
+                break;
+            case 3:
+                view = new RegionView();
+                break;
         }
     }
 

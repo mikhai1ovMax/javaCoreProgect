@@ -15,18 +15,19 @@ import java.util.Objects;
 @AllArgsConstructor
 public class Post {
     @Id
-    @GeneratedValue
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "content")
     private String content;
+
     @Column(name = "created")
     private LocalDateTime created;
+
     @Column(name = "updated")
     private LocalDateTime updated;
 
-    @ManyToOne(targetEntity = Writer.class)
-    @JoinColumn(name = "writers")
+    @ManyToOne
+    @JoinColumn(name = "writer_id")
     private Writer writer;
 
     public Post(int id, String content, LocalDateTime created) {
@@ -37,6 +38,7 @@ public class Post {
     public Post(String content) {
         this.content = content;
     }
+
 
 
     @Override

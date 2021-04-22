@@ -3,8 +3,10 @@ package models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,16 +15,17 @@ import java.util.Objects;
 @Table(name = "region", schema = "public")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Region {
+public class Region implements Serializable {
     @Id
-    @GeneratedValue
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "region", targetEntity = Writer.class)
-    private List<Writer> writers;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "region")
+    @ToString.Exclude
+    private transient List<Writer> writers;
+
 
     public Region(int id, String name) {
         this.id = id;
