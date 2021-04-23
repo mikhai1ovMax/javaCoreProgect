@@ -3,6 +3,7 @@ package views;
 import controllers.PostController;
 import controllers.PostControllerInterlayer;
 import models.Post;
+import models.Writer;
 
 import java.util.List;
 import java.util.Scanner;
@@ -36,6 +37,9 @@ public class PostView implements GenericView<Post, Integer> {
         post = new Post();
         System.out.println("enter post content");
         post.setContent(scanner.next());
+        post.setWriter(new Writer());
+        System.out.println("enter writer id");
+        post.getWriter().setId(scanner.nextInt());
         controller.save(post);
         return post;
     }

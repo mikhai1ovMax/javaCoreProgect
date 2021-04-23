@@ -33,7 +33,6 @@ public class ProgramStarter {
 
 
         }
-        SessionBuilder.closeSession();
         restart();
     }
 
