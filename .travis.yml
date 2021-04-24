@@ -1,25 +1,5 @@
 language: java
-
-sudo: false
-install: true
-
-addons:
-  sonarcloud:
-    organization: "mikhai1ovmax"
-    token:
-      secure: "cWLhRtw1q2janar4jk0d/1ljCuFmSwweDCvtMzAL9lpClRB/y6H88KhfCNA4CWVoLeDXstJ8CRLUsSlWdGaSRvwIC3I52fmFcA+DuAZM3LeH9a0f9q5GPtJIl2iG59dL5QHpXvOz82xuMaYCakOrQYslYB4SjFhNHVgDe6mFoeyZHSIc+F+oE2xypYpJHQE5MYatCHHUwyG/cozCrxyzD7qkg5Mx5FJPMKYQDAXeP3iureM+guLbtbPViSMyTG+ejm6jI1ssad5IZQr4Nl0OJUG57aPcRdw8wpxBrt6y2IZZ1lkJizWm5F1hOLm6zhLzQONerbqHadbwMcrARRCB8qygIWcmbe4UhERdc1XF8QSZGvZhIrcF/UqTNuLTtk5uVFosAbVFf5gFk0c5VFvFWhuGf81cv9FwCJmB/qhVK/55I2JVkeNtNqQKWeMr+HwOEeAoLB7o5GiCckSIdRJtraHpLH9gyWx+pSlMQjraypMXxDFtOAo4nttUs4cYpGkHobXxTrwqrspWzvPNNYT2V9tQ+B+QVJaqbase7qzVIOdBTiYCzAAKGvNMooeKW81Oc4G7QxHkMxWmq63UAQmBsYHGH10cGgDT8I1e0wNdk/Vaq58ClHHqqh6SRzVBOJb6nZgHHAE98wGI0XHBq9iDrmzLHLkHK39Tt02kBOgWhPg="
-
-script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=mikhai1ovMax_javaCoreProgect
-
-cache:
-  directories:
-    - '$HOME/.m2/repository'
-    - '$HOME/.sonar/cache'
-
-
-
-
+jdk: oraclejdk15
 
 
 
