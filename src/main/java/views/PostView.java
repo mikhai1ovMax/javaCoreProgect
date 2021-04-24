@@ -28,6 +28,9 @@ public class PostView implements GenericView<Post, Integer> {
         post.setId(getIdFromConsole());
         System.out.println("enter new content");
         post.setContent(scanner.next());
+        post.setWriter(new Writer());
+        System.out.println("enter new writer id");
+        post.getWriter().setId(scanner.nextInt());
         controller.update(post);
         return post;
     }

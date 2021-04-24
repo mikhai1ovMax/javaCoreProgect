@@ -1,6 +1,7 @@
 package repositories.hibernateRepositories;
 
 import models.Post;
+import org.hibernate.NonUniqueObjectException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import repositories.PostRepository;
@@ -14,7 +15,7 @@ public class HibernatePostRepository implements PostRepository {
     private Transaction transaction;
     private HibernateWriterRepository hibernateWriterRepository;
 
-    public HibernatePostRepository(){
+    public HibernatePostRepository() {
         session = SessionBuilder.getSession();
     }
 
@@ -34,16 +35,26 @@ public class HibernatePostRepository implements PostRepository {
         Post post = getById(object.getId());
         object.setCreated(post.getCreated());
         object.setUpdated(LocalDateTime.now());
-        object.setWriter(hibernateWriterRepository.getById(object.getWriter().getId()));
+        try {
+            object.setWriter(hibernateWriterRepository.getById(object.getWriter().getId()));
+        } catch (NullPointerException e) {
+            object.setWriter(null);
+        }
         session.beginTransaction();
-        session.update(object);
+        try {
+            session.update(object);
+        } catch (NonUniqueObjectException e) {
+            session = SessionBuilder.refreshSession();
+            session.beginTransaction();
+            session.update(object);
+        }
         session.getTransaction().commit();
         return object;
     }
 
     @Override
     public Post getById(Integer id) {
-        return (Post) session.createQuery("from Post where id = :id").getResultList().get(0);
+        return session.get(Post.class, id);
     }
 
     @Override

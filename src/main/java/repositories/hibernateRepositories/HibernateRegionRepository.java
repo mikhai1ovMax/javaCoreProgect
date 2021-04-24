@@ -33,7 +33,7 @@ public class HibernateRegionRepository implements RegionRepository {
 
     @Override
     public Region getById(Integer id) {
-        return (Region) session.createQuery("from Region where id = :id").getResultList().get(0);
+        return session.get(Region.class, id);
     }
 
     @Override

@@ -2,16 +2,11 @@ package views;
 
 import controllers.WriterController;
 import controllers.WriterControllerInterlayer;
+import models.Region;
 import models.Writer;
-import models.WriterFactory;
-import repositories.*;
-import repositories.jsonRepositoires.JsonPostRepository;
-import repositories.jsonRepositoires.JsonRegionRepository;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class WriterView implements GenericView<Writer, Integer> {
     WriterControllerInterlayer controller = new WriterController();
@@ -30,8 +25,8 @@ public class WriterView implements GenericView<Writer, Integer> {
 
     @Override
     public Writer Update() {
-        writer = getWriterWithoutId();
         writer.setId(getIdFromConsole());
+        writer = getWriterWithoutId();
         controller.update(writer);
         return writer;
     }
@@ -48,22 +43,14 @@ public class WriterView implements GenericView<Writer, Integer> {
     }
 
     private Writer getWriterWithoutId() {
-        PostRepository postsRepo = new JsonPostRepository();
-        RegionRepository regionRepo = new JsonRegionRepository();
-        WriterFactory writerFactory = new WriterFactory();
-
+        Writer writer = new Writer();
         System.out.println("enter name");
-        writerFactory.setFirstName(scanner.next());
+        writer.setFirstName(scanner.next());
         System.out.println("enter last name");
-        writerFactory.setLastName(scanner.next());
-        System.out.println("enter posts id");
-        List<Integer> postsId = Arrays.stream(scanner.nextLine()
-                .split(" +"))
-                .map(Integer::parseInt)
-                .collect(Collectors.toList());
-        writerFactory.setPostsByIdList(postsId);
+        writer.setLastName(scanner.next());
         System.out.println("enter region id");
-        writerFactory.setRegionById(scanner.nextInt());
-        return writerFactory.getWriter();
+        writer.setRegion(new Region());
+        writer.getRegion().setId(scanner.nextInt());
+        return writer;
     }
 }

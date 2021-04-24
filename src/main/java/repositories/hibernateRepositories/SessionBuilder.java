@@ -34,6 +34,13 @@ public class SessionBuilder {
             openSession();
         return session;
     }
+
+    public static Session refreshSession(){
+        session.close();
+        session = buildSessionFactory().openSession();
+        return session;
+    }
+
     public static void openSession(){
         session = buildSessionFactory().openSession();
     }
