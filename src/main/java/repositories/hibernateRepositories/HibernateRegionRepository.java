@@ -2,7 +2,6 @@ package repositories.hibernateRepositories;
 
 import models.Region;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import repositories.RegionRepository;
 
 import java.util.List;
